@@ -9,32 +9,34 @@ function animateCard(card, index) {
 /* =========================
    Fleet Loader
 ========================= */
-fetch('data/fleet.json')
-  .then(res => res.json())
-  .then(fleet => {
-    const grid = document.getElementById('fleet-grid');
-    grid.dataset.items = JSON.stringify(fleet);
-    renderFleet(fleet);
-  });
+function renderFleet() {
+    const c = document.querySelector('.content');
+    c.innerHTML = `
+        <h1>Fleet</h1>
+        <div id="fleet-grid" class="card-grid"></div>
+    `;
 
-function renderFleet(fleet) {
-    const grid = document.getElementById('fleet-grid');
-    grid.innerHTML = '';
+    fetch('data/fleet.json')
+        .then(res => res.json())
+        .then(fleet => {
+            const grid = document.getElementById('fleet-grid');
+            grid.dataset.items = JSON.stringify(fleet);
 
-    fleet.forEach((ship, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.role = ship.role;
+            fleet.forEach((ship, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.role = ship.role;
 
-        card.innerHTML = `
-          <h2>${ship.name}</h2>
-          <span class="role">${ship.role}</span>
-          <p>${ship.description}</p>
-        `;
+                card.innerHTML = `
+                    <h2>${ship.name}</h2>
+                    <span class="role">${ship.role}</span>
+                    <p>${ship.description}</p>
+                `;
 
-        grid.appendChild(card);
-        animateCard(card, index);
-    });
+                grid.appendChild(card);
+                animateCard(card, index);
+            });
+        });
 }
 
 /* =========================
@@ -173,16 +175,19 @@ const routes = {
 function navigate(route) {
     document.querySelectorAll('.nav-links a')
         .forEach(a => a.classList.toggle('active', a.dataset.route === route));
+    
+    document.querySelectorAll('.nav-links a'[data-route]).foreach(a =>{
+        a.addEventListener('click', e =>{
+            e.preventDefault();
+            const route = a.dataset.route;
+            location.hash = `#/${route}`;
+            navigate(route); // ensure immediate render
+        });
+    });
 
     document.querySelector('.content').innerHTML = '';
     routes[route]?.();
 }
-
-// Trigger initial load
-window.addEventListener('DOMContentLoaded', () => {
-    const route = location.hash.replace('#/', '') || 'overview';
-    navigate(route);
-});
 
 window.addEventListener('hashchange', () => {
     const route = location.hash.replace('#/', '') || 'overview';
@@ -209,3 +214,10 @@ function getUEEDate() {
 
 document.querySelector('.status-left').textContent =
     `UEE DATE: ${getUEEDate()}`;
+
+
+// Trigger initial load
+window.addEventListener('DOMContentLoaded', () => {
+    const route = location.hash.replace('#/', '') || 'overview';
+    navigate(route);
+});
