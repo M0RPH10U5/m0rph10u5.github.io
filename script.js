@@ -182,3 +182,16 @@ window.addEventListener('hashchange', () => {
     const route = location.hash.replace('#/', '') || 'overview';
     navigate(route);
 });
+
+/* ======================
+        UEE Date
+=======================*/
+
+function getUEEDate() {
+    const year = 2954;
+    const now = new Date();
+    return `${year}-${now.getMonth()+1}-${now.getDate()}`;
+}
+
+document.querySelector('.status-center').textContent =
+    `UEE DATE: ${getUEEDate()}`;
