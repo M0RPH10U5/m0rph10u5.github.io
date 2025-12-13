@@ -225,3 +225,15 @@ p {
         transform: translateY(0) scale(1);
     }
 }
+
+.mini {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.mini.operational { background: #4cff9a; }
+.mini.disrupted { background: #ffd166; }
+.mini.down { background: #ff4c4c; }
