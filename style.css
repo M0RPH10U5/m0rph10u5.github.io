@@ -48,6 +48,17 @@ body {
     margin-top: 20px;
 }
 
+.nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-links a.active {
+    background: linear-gradient(90deg, #1b2433, transparent);
+    border-left: 3px solid #7fb4ff;
+}
+
 .nav-links li a {
     display: block;
     padding: 14px 20px;

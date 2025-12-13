@@ -124,3 +124,27 @@ fetch('https://status.robertsspaceindustries.com/index.json')
         statusEl.classList.remove('online');
         statusEl.classList.add('offline');
     });
+
+
+/* ===========================
+     Per Route Loading
+=========================== */
+    const routes = {
+    overview: renderOverview,
+    fleet: renderFleet,
+    members: renderMembers,
+    logs: renderLogs
+};
+
+function navigate(route) {
+    document.querySelectorAll('.nav-links a')
+        .forEach(a => a.classList.toggle('active', a.dataset.route === route));
+
+    document.querySelector('.content').innerHTML = '';
+    routes[route]?.();
+}
+
+window.addEventListener('hashchange', () => {
+    const route = location.hash.replace('#/', '') || 'overview';
+    navigate(route);
+});
