@@ -248,5 +248,5 @@ p {
 }
 
 .mini.operational { background: #4cff9a; }
-.mini.disrupted { background: #ffd166; }
+.mini.degraded { background: #ffd166; }
 .mini.down { background: #ff4c4c; }
