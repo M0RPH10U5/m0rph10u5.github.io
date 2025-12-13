@@ -163,7 +163,7 @@ fetchRSIStatus();
 /* ===========================
      Per Route Loading
 =========================== */
-    const routes = {
+const routes = {
     overview: renderOverview,
     fleet: renderFleet,
     members: renderMembers,
@@ -178,10 +178,24 @@ function navigate(route) {
     routes[route]?.();
 }
 
+// Trigger initial load
+window.addEventListener('DOMContentLoaded', () => {
+    const route = location.hash.replace('#/', '') || 'overview';
+    navigate(route);
+});
+
 window.addEventListener('hashchange', () => {
     const route = location.hash.replace('#/', '') || 'overview';
     navigate(route);
 });
+
+document.querySelectorAll('.nav-links a[data-route]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        location.hash = `#/${a.dataset.route}`;
+    });
+});
+
 
 /* ======================
         UEE Date
