@@ -65,3 +65,57 @@ body {
     line-height: 1.6;
     max-width: 900px;
 }
+
+/* ===== Lock Sidebar Height ===== */
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+/* Push main content to the right of fixed sidebar */
+.main-content {
+    margin-left: 240px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+/* ===== Top Status Bar ===== */
+.status-bar {
+    height: 56px;
+    background-color: #0f1724;
+    border-bottom: 1px solid #1f2a3a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.status-left {
+    color: #7fb4ff;
+}
+
+.status-right {
+    color: #4cff9a;
+    font-weight: bold;
+}
+
+/* ===== Scrollable Content Area ===== */
+.main-content > h1,
+.main-content > p {
+    padding: 30px;
+}
+
+.main-content {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.main-content > :not(.status-bar) {
+    overflow-y: auto;
+    flex-grow: 1;
+}
