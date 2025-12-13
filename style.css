@@ -75,7 +75,6 @@ body {
 }
 
 .nav-links li a {
-    display: block;
     padding: 14px 20px;
     text-decoration: none;
     color: #cfd8e3;
