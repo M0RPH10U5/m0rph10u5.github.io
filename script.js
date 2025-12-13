@@ -57,7 +57,7 @@ const routes = {
             <button data-filter="Pilot">PILOT</button>
             <button data-filter="Engineer">ENGINEER</button>
         </div>
-        
+
         <p>List of current members will appear here.</p>
     `,
     logs: `
@@ -92,3 +92,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const route = location.hash.slice(2) || 'overview';
     renderRoute(route);
 });
+
+// ===== RSI Status Fetch and Cache =====
+const RSI_STATUS_URL = 'https://status.robertsspaceindustries.com/index.json';
+const CACHE_KEY = 'rsiStatus';
+const CACHE_TTL = 60 * 1000; // 5 minute cache
+
+async function fetchRSIStatus() {
+    // Check cache first
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    const now = Date.now();
+    if (cached && now - cached.timestamp < CACHE_TTL) {
+        updateStatusUI(cached.data);
+        return;
+    }
+
+    try {
+        const res = await fetch(RSI_STATUS_URL);
+        if (!res.ok) throw new Error('Failed to fetch RSI status');
+        const data = await res.json();
+
+        // Cache it
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: now }));
+
+        // Update UI
+        updateStatusUI(data);
+    } catch (err) {
+        console.error('RSI Status Error:', err);
+        // Use cached data if available
+        if (cached) updateStatusUI(cached.data);
+    }
+}
+
+// Map RSI status string to mini indicator class
+function mapStatusToClass(status) {
+    switch (status.toLowerCase()) {
+        case 'operational': return 'operational';
+        case 'degraded': return 'degraded';
+        case 'offline': return 'offline';
+        default: return 'operational';
+    }
+}
+
+// Update the Status Bar UI
+function updateStatusUI(data) {
+    // Update summary status (status-right)
+    const summary = data.summaryStatus || 'ONLINE';
+    const statusRight = document.querySelector('.status-right');
+    statusRight.textContent = summary.toUpperCase();
+
+    // Update status-right color class
+    statusRight.classList.remove('online', 'degraded', 'offline');
+    statusRight.classList.add(summary.toLowerCase());
+
+    // Update mini indicators
+    const services = data.services || [];
+    const getMini = (name) => {
+        const service = services.find(s => s.name === name);
+        return service ? mapStatusToClass(service.status) : 'operational';
+    };
+
+    document.getElementById('Platform').className = `mini ${getMini('Platform')}`;
+    document.getElementById('Persistent-Universe').className = `mini ${getMini('Persistent Universe')}`;
+    document.getElementById('Arena-Commander').className = `mini ${getMini('Arena Commander')}`;
+}
+
+// Initial fetch
+fetchRSIStatus();
+
+// Optional: auto-refresh every 60 seconds
+setInterval(fetchRSIStatus, CACHE_TTL);
