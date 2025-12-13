@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== RSI Status Fetch and Cache =====
 const RSI_STATUS_URL = 'https://status.robertsspaceindustries.com/index.json';
 const CACHE_KEY = 'rsiStatus';
-const CACHE_TTL = 60 * 1000; // 5 minute cache
+const CACHE_TTL = 60 * 1000; // 1 minute cache
 
 async function fetchRSIStatus() {
     // Check cache first
@@ -138,7 +138,7 @@ function mapStatusToClass(status) {
 function updateStatusUI(data) {
     // Update summary status (status-right)
     const summary = data.summaryStatus || 'ONLINE';
-    const statusRight = document.querySelector('.status-right');
+    const statusLeft = document.querySelector('.status-left');
     statusRight.textContent = summary.toUpperCase();
 
     // Update status-right color class
