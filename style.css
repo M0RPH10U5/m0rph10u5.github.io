@@ -177,6 +177,8 @@ p {
     padding: 20px;
     border-radius: 6px;
     transition: border-color 0.2s ease;
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
 }
 
 .card:hover {
@@ -224,10 +226,6 @@ p {
 }
 
 /* ===== mobiGlas Card Animation ===== */
-.card {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-}
 
 .card.animate-in {
     animation: mobiIn 0.35s ease forwards;

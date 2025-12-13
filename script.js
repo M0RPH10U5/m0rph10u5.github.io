@@ -40,9 +40,24 @@ const routes = {
         </p>
     `,
     fleet: `
+        <h1>Fleet</h1>
+        <div class="filters">
+            <button data-filter="all">ALL</button>
+            <button data-filter="Flagship">FLAGSHIP</button>
+            <button data-filter="Recon / Data">RECON</button>
+        </div>
+
         <div id="fleet-grid"></div>
     `,
     members: `
+        <h1>Members</h1>
+        <div class="filters">
+            <button data-filter="all">ALL</button>
+            <button data-filter="Captain">CAPTAIN</button>
+            <button data-filter="Pilot">PILOT</button>
+            <button data-filter="Engineer">ENGINEER</button>
+        </div>
+        
         <p>List of current members will appear here.</p>
     `,
     logs: `
