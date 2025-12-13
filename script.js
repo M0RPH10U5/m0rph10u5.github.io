@@ -92,7 +92,7 @@ document.querySelectorAll('.filters button').forEach(btn => {
 /* =========================
    RSI Server Status
 ========================= */
-const statusEl = document.querySelector('.status-right');
+/* const statusEl = document.querySelector('.status-right');
 
 fetch('https://status.robertsspaceindustries.com/index.json')
     .then(response => response.json())
@@ -124,6 +124,40 @@ fetch('https://status.robertsspaceindustries.com/index.json')
         statusEl.classList.remove('online');
         statusEl.classList.add('offline');
     });
+*/
+
+const STATUS_KEY = 'rsi_status_cache';
+const STATUS_TTL = 5 * 60 * 1000;
+
+function updateStatusUI(data) {
+    document.querySelector('.status-right').textContent =
+        data.summaryStatus.toUpperCase();
+
+    data.systems.forEach(sys => {
+        const el = document.getElementById(sys.name.replace(' ', '-'));
+        el.className = `mini ${sys.status}`;
+    });
+}
+
+function fetchRSIStatus() {
+    const cached = JSON.parse(localStorage.getItem(STATUS_KEY));
+    if (cached && Date.now() - cached.time < STATUS_TTL) {
+        updateStatusUI(cached.data);
+        return;
+    }
+
+    fetch('https://status.robertsspaceindustries.com/index.json')
+        .then(r => r.json())
+        .then(data => {
+            localStorage.setItem(STATUS_KEY, JSON.stringify({
+                time: Date.now(),
+                data
+            }));
+            updateStatusUI(data);
+        });
+}
+
+fetchRSIStatus();
 
 
 /* ===========================
