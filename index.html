@@ -1,40 +1,96 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Intergalactic Gamers United</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <!-- Left Navbar -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                SHADOW LINER
-            </div>
-            
-            <ul class="nav-links">
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Org Overview</a></li>
-                <li><a href="#">Fleet</a></li>
-                <li><a href="#">Members</a></li>
-                <li><a href="#">Operations</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Shadow Liner | Star Citizen Org</title>
 
-        <!-- Right Content Area -->
-        <main class="main-content">
-            <header class="status-bar">
-                <div class="status-left">SHADOW LINER // ORG STATUS</div>
-                <div class="status-right">ONLINE</div>
-            </header>
-            <h1>Welcome to Shadow Liner</h1>
-            <p>
-                This is the main content area. Everything related to your Star Citizen organization
-                will appear here. You can replace this with dashboards, fleet cards, member lists,
-                recruitment info, or captain logs.
-            </p>
-        </main>
-    </body>
+
+            <!-- RSI-style typography -->
+            <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+            <!-- External stylesheet -->
+            <link rel="stylesheet" href="style.css">
+        </head>
+        <body>
+
+
+            <!-- Sidebar / Org Navbar -->
+            <aside class="sidebar">
+                <div class="org-header">
+                    SHADOW LINER
+                        <span>STAR CITIZEN ORG</span>
+                </div>
+
+
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#">Overview</a></li>
+                        <li><a href="#">Fleet</a></li>
+                        <li><a href="#">Members</a></li>
+                        <li><a href="#">Operations</a></li>
+                        <li><a href="#">Recruitment</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+
+            <!-- Main Content Area -->
+            <main class="main">
+
+
+                <!-- Top Status Bar -->
+                <header class="status-bar">
+                    <div class="status-left">
+                        SERVER: STANTON
+                    </div>
+                    <div class="status-center">
+                        RSI NETWORK STATUS
+                    </div>
+                    <div class="status-right online">
+                        ONLINE
+                    </div>
+                </header>
+
+
+                <!-- Scrollable Content -->
+                <section class="content">
+                    <h1>Organization Overview</h1>
+                    <p>
+                        Shadow Liner is a private spacefaring organization operating luxury, logistics,
+                        and long-range exploration vessels across UEE-controlled space.
+                    </p>
+
+
+                    <!-- Fleet Cards (JSON-ready structure) -->
+                    <div class="card-grid" id="fleet-grid">
+                        <p class="loading">Loading Fleet Data...</p>
+                    </div>
+                </section>
+            </main>
+            <script>
+                fetch('data/fleet.json')
+                    .then(response => response.json())
+                    .then(fleet => {
+                        const grid = document.getElementById('fleet-grid');
+
+                        fleet.forEach(ship => {
+                            const card = document.createElement('div');
+                            card.className = 'card';
+
+                            card.innerHTML = `
+                                <h2>${ship.name}</h2>
+                                <span class="role">${ship.role}</span>
+                                <p>${ship.description}</p>
+                            `;
+
+                            grid.appendChild(card);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error loading fleet data:', error);
+                    });
+            </script>
+        </body>
 </html>
