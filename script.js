@@ -188,10 +188,10 @@ window.addEventListener('hashchange', () => {
 =======================*/
 
 function getUEEDate() {
-    const year = 2954;
+    const year = 2955;
     const now = new Date();
     return `${year}-${now.getMonth()+1}-${now.getDate()}`;
 }
 
-document.querySelector('.status-center').textContent =
+document.querySelector('.status-left').textContent =
     `UEE DATE: ${getUEEDate()}`;
