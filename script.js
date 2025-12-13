@@ -7,71 +7,6 @@ function animateCard(card, index) {
 }
 
 /* =========================
-   Fleet Loader
-========================= */
-function renderFleet() {
-    const c = document.querySelector('.content');
-    c.innerHTML = `
-        <h1>Fleet</h1>
-        <div id="fleet-grid" class="card-grid"></div>
-    `;
-
-    fetch('data/fleet.json')
-        .then(res => res.json())
-        .then(fleet => {
-            const grid = document.getElementById('fleet-grid');
-            grid.dataset.items = JSON.stringify(fleet);
-
-            fleet.forEach((ship, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.dataset.role = ship.role;
-
-                card.innerHTML = `
-                    <h2>${ship.name}</h2>
-                    <span class="role">${ship.role}</span>
-                    <p>${ship.description}</p>
-                `;
-
-                grid.appendChild(card);
-                animateCard(card, index);
-            });
-        });
-}
-
-/* =========================
-   Member Loader
-========================= */
-fetch('data/members.json')
-  .then(res => res.json())
-  .then(members => {
-    const grid = document.getElementById('member-grid');
-    grid.dataset.items = JSON.stringify(members);
-    renderMembers(members);
-  });
-
-function renderMembers(members) {
-    const grid = document.getElementById('member-grid');
-    grid.innerHTML = '';
-
-    members.forEach((member, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.role = member.role;
-
-        card.innerHTML = `
-          <h2>${member.name}</h2>
-          <h3>${member.sc-name}</h3>
-          <span class="role">${member.role}</span>
-          <p>${member.specialty} — ${member.ship}</p>
-        `;
-
-        grid.appendChild(card);
-        animateCard(card, index);
-    });
-}
-
-/* =========================
    Filtering
 ========================= */
 document.querySelectorAll('.filters button').forEach(btn => {
@@ -91,133 +26,54 @@ document.querySelectorAll('.filters button').forEach(btn => {
     });
 });
 
-/* =========================
-   RSI Server Status
-========================= */
-/* const statusEl = document.querySelector('.status-right');
-
-fetch('https://status.robertsspaceindustries.com/index.json')
-    .then(response => response.json())
-    .then(data => {
-        const status = (data.summaryStatus || 'unknown').toUpperCase();
-
-        statusEl.textContent = status;
-
-        // Reset state
-        statusEl.classList.remove('online', 'degraded', 'offline');
-        statusEl.style.color = 
-            status === 'OPERATIONAL' ? data.colorOk :
-            status === 'DISRUPTED' ? data.colorDisrupted :
-            data.colorDown;
-
-        switch (status) {
-            case 'OPERATIONAL':
-                statusEl.classList.add('online');
-                break;
-            case 'DEGRADED':
-                statusEl.classList.add('degraded');
-                break;
-            default:
-                statusEl.classList.add('offline');
-        }
-    })
-    .catch(() => {
-        statusEl.textContent = 'OFFLINE';
-        statusEl.classList.remove('online');
-        statusEl.classList.add('offline');
-    });
-*/
-
-const STATUS_KEY = 'rsi_status_cache';
-const STATUS_TTL = 5 * 60 * 1000;
-
-function updateStatusUI(data) {
-    document.querySelector('.status-right').textContent =
-        data.summaryStatus.toUpperCase();
-
-    data.systems.forEach(sys => {
-        const el = document.getElementById(sys.name.replace(' ', '-'));
-        el.className = `mini ${sys.status}`;
-    });
-}
-
-function fetchRSIStatus() {
-    const cached = JSON.parse(localStorage.getItem(STATUS_KEY));
-    if (cached && Date.now() - cached.time < STATUS_TTL) {
-        updateStatusUI(cached.data);
-        return;
-    }
-
-    fetch('https://status.robertsspaceindustries.com/index.json')
-        .then(r => r.json())
-        .then(data => {
-            localStorage.setItem(STATUS_KEY, JSON.stringify({
-                time: Date.now(),
-                data
-            }));
-            updateStatusUI(data);
-        });
-}
-
-fetchRSIStatus();
-
 
 /* ===========================
      Per Route Loading
 =========================== */
+// Define your pages as functions or HTML strings
 const routes = {
-    overview: renderOverview,
-    fleet: renderFleet,
-    members: renderMembers,
-    logs: renderLogs
+    overview: `
+        <h1>Organization Overview</h1>
+        <p>
+            Shadow Liner is a private spacefaring organization operating luxury, logistics,
+            and long-range exploration vessels across UEE-controlled space.
+        </p>
+    `,
+    fleet: `
+        <div id="fleet-grid"></div>
+    `,
+    members: `
+        <p>List of current members will appear here.</p>
+    `,
+    logs: `
+        <h1>Captain Logs</h1>
+        <p>Log entries from recent missions will appear here.</p>
+    `
 };
 
-function navigate(route) {
-    document.querySelectorAll('.nav-links a')
-        .forEach(a => a.classList.toggle('active', a.dataset.route === route));
-    
-    document.querySelectorAll('.nav-links a'[data-route]).foreach(a =>{
-        a.addEventListener('click', e =>{
-            e.preventDefault();
-            const route = a.dataset.route;
-            location.hash = `#/${route}`;
-            navigate(route); // ensure immediate render
-        });
-    });
+// Function to render page content
+function renderRoute(route) {
+    const content = document.querySelector('.content');
+    if (routes[route]) {
+        content.innerHTML = routes[route];
+    } else {
+        content.innerHTML = `<h1>Page Not Found</h1><p>The page '${route}' does not exist.</p>`;
+    }
 
-    document.querySelector('.content').innerHTML = '';
-    routes[route]?.();
+    // Update active nav link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.toggle('active', link.dataset.route === route);
+    });
 }
 
+// Listen for hash changes
 window.addEventListener('hashchange', () => {
-    const route = location.hash.replace('#/', '') || 'overview';
-    navigate(route);
+    const route = location.hash.slice(2) || 'overview';
+    renderRoute(route);
 });
 
-document.querySelectorAll('.nav-links a[data-route]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        location.hash = `#/${a.dataset.route}`;
-    });
-});
-
-
-/* ======================
-        UEE Date
-=======================*/
-
-function getUEEDate() {
-    const year = 2955;
-    const now = new Date();
-    return `${year}-${now.getMonth()+1}-${now.getDate()}`;
-}
-
-document.querySelector('.status-left').textContent =
-    `UEE DATE: ${getUEEDate()}`;
-
-
-// Trigger initial load
-window.addEventListener('DOMContentLoaded', () => {
-    const route = location.hash.replace('#/', '') || 'overview';
-    navigate(route);
+// Initial page load
+document.addEventListener('DOMContentLoaded', () => {
+    const route = location.hash.slice(2) || 'overview';
+    renderRoute(route);
 });
