@@ -111,7 +111,8 @@ body {
 }
 
 .status-left {
-    color: #7fb4ff;
+    text-align: left;
+    letter-spacing: 0.15em;
 }
 
 .status-center {
@@ -125,17 +126,17 @@ body {
 }
 
 /* ===== RSI Network States ===== */
-.status-right.online {
+.status-left.online {
     color: #4cff9a; /* green */
     animation: pulse 5s infinite;
 }
 
-.status-right.degraded {
+.status-left.degraded {
     color: #ffd166; /* amber */
     animation: pulse 3.5s infinite;
 }
 
-.status-right.offline {
+.status-left.offline {
     color: #ff4c4c; /* red */
     animation: pulse 2s infinite;
 }
