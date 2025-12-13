@@ -59,6 +59,7 @@ function renderMembers(members) {
 
         card.innerHTML = `
           <h2>${member.name}</h2>
+          <h3>${member.sc-name}</h3>
           <span class="role">${member.role}</span>
           <p>${member.specialty} — ${member.ship}</p>
         `;
@@ -89,21 +90,6 @@ document.querySelectorAll('.filters button').forEach(btn => {
 });
 
 /* =========================
-   RSI Server Status (Safe)
-========================= */
-fetch('https://status.robertsspaceindustries.com/index.json')
-  .then(res => res.json())
-  .then(data => {
-    const status = data?.status?.description || 'UNKNOWN';
-    const statusEl = document.querySelector('.status-right');
-    statusEl.textContent = status.toUpperCase();
-    statusEl.classList.toggle('online', status.includes('Operational'));
-  })
-  .catch(() => {
-    document.querySelector('.status-right').textContent = 'OFFLINE';
-  });
-
-  /* =========================
    RSI Server Status
 ========================= */
 const statusEl = document.querySelector('.status-right');
