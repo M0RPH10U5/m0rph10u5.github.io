@@ -96,10 +96,28 @@ body {
 
 .status-right {
     text-align: right;
+    letter-spacing: 0.15em;
 }
 
+/* ===== RSI Network States ===== */
 .status-right.online {
-    color: #4cff9a;
+    color: #4cff9a; /* green */
+    animation: pulse 5s infinite;
+}
+
+.status-right.degraded {
+    color: #ffd166; /* amber */
+    animation: pulse 3.5s infinite;
+}
+
+.status-right.offline {
+    color: #ff4c4c; /* red */
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
 }
 
 /* ===== Scrollable Content ===== */
@@ -158,4 +176,41 @@ p {
 .loading {
     opacity: 0.6;
     letter-spacing: 0.1em;
+}
+
+/* ===== Filters ===== */
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters button {
+    background: transparent;
+    border: 1px solid #1f2a3a;
+    color: #7fb4ff;
+    padding: 6px 12px;
+    margin-right: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background-color: #1b2433;
+}
+
+/* ===== mobiGlas Card Animation ===== */
+.card {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+}
+
+.card.animate-in {
+    animation: mobiIn 0.35s ease forwards;
+}
+
+@keyframes mobiIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

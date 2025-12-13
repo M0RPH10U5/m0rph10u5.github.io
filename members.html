@@ -56,11 +56,19 @@
 
                 <!-- Scrollable Content -->
                 <section class="content">
-                    <h1>Organization Overview</h1>
-                    <p>
-                        Shadow Liner is a private spacefaring organization operating luxury, logistics,
-                        and long-range exploration vessels across UEE-controlled space.
-                    </p>
+                    <!-- Member Cards (JSON-ready structure) -->
+                    <div class="filters">
+                        <button data-filter="all">ALL</button>
+                        <button data-filter="Captain">CAPTAIN</button>
+                        <button data-filter="Pilot">PILOT</button>
+                        <button data-filter="Engineer">ENGINEER</button>
+                    </div>
+
+                    <div class="card-grid" id="member-grid">
+                        <p>
+                            Loading Member Data...
+                        </p>
+                    </div>
                 </section>
             </main>
             <script src="script.js"></script>
