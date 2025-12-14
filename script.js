@@ -128,12 +128,15 @@ async function renderRoute(route) {
         switch(route) {
             case 'overview':
                 if (Array.isArray(data) && data.length > 0) {
-                    const entry = data[0]; // take first entry
-                    content.innerHTML = `
-                    <h1>Overview</h1>
-                    <h3>${entry.title || 'Overview'}</h3>
+                    content.innerHTML = `<h1>Overview</h1>`; // main heading
+
+                    // Loop through all entries
+                    data.forEach(entry => {
+                    content.innerHTML += `
+                    <h3>${entry.title || ''}</h3>
                     <p>${entry.content || ''}</p>
                     `;
+                    });
                 } else {
                     content.innerHTML = `<h1>Overview</h1><p>No content found.</p>`;
                 }
