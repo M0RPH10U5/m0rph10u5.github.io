@@ -227,14 +227,13 @@ p {
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: #7fb4ff;
-    display: inline-block;
+    display: block;
     margin-bottom: 10px;
 }
 
 .card .sc-label {
     font-size: 0.75rem;
     letter-spacing: 0.1em;
-    display: inline-block;
     margin-bottom: 10px;
 }
 
@@ -242,7 +241,6 @@ p {
     font-size: 0.65rem;
     letter-spacing: 0.1em;
     color: #7fb4ff;
-    display: inline-block;
     margin-bottom: 10px;
 }
 
