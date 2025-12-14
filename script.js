@@ -123,7 +123,10 @@ async function renderRoute(route) {
     try {
         // Fetch JSON
         const res = await fetch(`data/${route}.json`);
-        if (!res.ok) throw new Error('JSON not found');
+        if (!res.ok) {
+            console.error('Fetch failed', res.status, res.statusText, `data/${route}.json`);
+            throw new Error('JSON not found');
+        }
         const data = await res.json();
 
         // Render based on route
