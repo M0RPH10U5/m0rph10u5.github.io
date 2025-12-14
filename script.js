@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== RSI Status Fetch and Cache =====
-const RSI_STATUS_URL = 'https://status.robertsspaceindustries.com/index.json';
+const RSI_STATUS_URL = 'https://api.allorigins.win/raw?url=https://status.robertsspaceindustries.com/index.json';
 const CACHE_KEY = 'rsiStatus';
 const CACHE_TTL = 60 * 1000; // 1 minute cache
 
