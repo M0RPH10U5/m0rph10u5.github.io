@@ -52,6 +52,7 @@ function renderMembers(members) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${member.name}</h2>
+            <h3>${member.sc-name}</h3>
             <span class="role">${member.role}</span>
             <p>${member.rank || ''}</p>
         `;
