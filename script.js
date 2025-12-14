@@ -52,10 +52,10 @@ function renderMembers(members) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${member.name}</h2>
-            <h5>SC Name: ${member["sc-name"]}</h5>
             <span class="role">${member.role}</span>
-            <p><strong>Specialty:</strong> ${member.specialty || 'N/A'}</p>
-            <p><strong>Ship:</strong> ${member.ship || 'N/A'}</p>
+            <h6>SC Name: ${member["sc-name"]}</h6>
+            <strong>Specialty:</strong> ${member.specialty || 'N/A'}
+            <strong>Ship:</strong> ${member.ship || 'N/A'}
         `;
         grid.appendChild(card);
         animateCard(card, i);
