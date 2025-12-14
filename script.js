@@ -171,36 +171,41 @@ async function renderRoute(route) {
                 break;
 
             case 'logs':
-                content.innerHTML = `<h1>Captains Logs</h1>`;
-
-                if (!Array.isArray(data) || data.length === 0) {
-                    content.innerHTML += `<p>No logs found.</p>`;
-                        break;
-                }
-
-                // Sort Newest -> Oldest
-                const sortedLogs = [...data].sort((a,b) => 
-                    b.date.localeCompare(a.date)
-                );
-
-                sortedLogs.forEach((log, i) => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-
-                    card.innerHTML = `
-                        <h2>${log.title}</h2>
-                        <div class="log-date">${log.date}</div>
-                        <div class="log-user">
-                            <strong>USER:</strong> <span>${log.user}</span>
+                .sort((a,b) => new Date(b.date) - new Date(a.date)) // newwest first
+                .forEach(log => {
+                    content.innerHTML += `
+                        <div class="log-entry collapsed">
+                            <div class="log-line"></div>
+                            
+                            <div class="log-header">
+                                <h2>${log.title}</h2>
+                                <div class="log-meta">
+                                    <span class="log-date">${log.date}</span>
+                                    <span class="log-user">
+                                        <span class="label">USER</span>
+                                        <span class="value">${log.user}</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="log-body">
+                                <p>${log.entry}</p>
+                            </div>
+                            
+                            <div class="log-toggle">READ LOG</div>
                         </div>
-
-                        <p>${log.entry}</p>
                     `;
-
-                    content.appendChild(card);
-                    animateCard(card, i); // ✅ THIS WAS MISSING
                 });
-                    break;
+
+                // Expand / Collapse behavior
+                content.querySelectorAll('.log-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        const entry = toggle.closest('.log-entry');
+                        entry.classList.toggle('collapsed');
+                            ? 'READ LOG'
+                            : 'CLOSE LOG';
+                    });
+                });
 
             case 'about':
                 content.innerHTML = `
