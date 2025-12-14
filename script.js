@@ -1,3 +1,6 @@
+let tooltip;
+let rsiServices = [];
+
 /* =========================
    Utility: Animate card entry
 ========================= */
@@ -200,9 +203,6 @@ fetchRSIStatus();
 
 // Optional: auto-refresh every 60 seconds
 setInterval(fetchRSIStatus, CACHE_TTL);
-
-let tooltip;
-let rsiServices = [];
 
 // Create tooltip element once
 function createTooltip() {
