@@ -78,6 +78,10 @@ body {
     color: #ffffff;
 }
 
+.nav-com {
+    margin-top: 20px;
+}
+
 /* ===== Main Area ===== */
 .main {
     margin-left: 240px;
