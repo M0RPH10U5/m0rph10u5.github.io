@@ -196,7 +196,7 @@ function updateStatusUI(data) {
         statusRight.className = `status-right ${summaryData.class}`;
     }
 
-    rsiServices = data.services || [];
+    rsiServices = data.systems || [];
 
     if (!tooltip) createTooltip();
 
