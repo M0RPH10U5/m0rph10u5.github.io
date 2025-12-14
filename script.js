@@ -148,11 +148,22 @@ async function fetchRSIStatus() {
 
 // Map RSI status string to mini indicator class
 function mapStatusToClass(status) {
+    if (!status) return 'operational';
+
     switch (status.toLowerCase()) {
-        case 'operational': return 'operational';
-        case 'degraded': return 'degraded';
-        case 'offline': return 'offline';
-        default: return 'operational';
+        case 'operational':
+            return 'operational';
+
+        case 'degraded':
+        case 'degraded_performance':
+        case 'partial_outage':
+            return 'degraded';
+
+        case 'major_outage':
+            return 'offline';
+
+        default:
+            return 'operational';
     }
 }
 
@@ -218,24 +229,30 @@ function createTooltip() {
 
 // Attach tooltip behavior to a mini indicator
 function attachTooltip(el, service) {
-    el.onmouseenter = () => {
+    if (!el || !service) return;
+
+    // prevent rebinding on refresh
+    if (el.dataset.tooltipBound) return;
+    el.dataset.tooltipBound = '1';
+
+    el.addEventListener('mouseenter', () => {
         const statusClass = mapStatusToClass(service.status);
 
-    tooltip.innerHTML = `
-        <div class="title">${service.name}</div>
-        <div class="status ${statusClass}">
-            ${service.status.replace('_', ' ').toUpperCase()}
-        </div>
-        ${service.description ? `<div class="desc">${service.description}</div>` : ''}
-    `;
+        tooltip.innerHTML = `
+            <div class="title">${service.name}</div>
+            <div class="status ${statusClass}">
+                ${service.status.replace(/_/g, ' ').toUpperCase()}
+            </div>
+            ${service.description ? `<div class="desc">${service.description}</div>` : ''}
+        `;
 
-    const rect = el.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
         tooltip.style.left = `${rect.left + window.scrollX}px`;
         tooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
         tooltip.classList.add('visible');
-    };
+    });
 
-    el.onmouseleave = () => {
+    el.addEventListener('mouseleave', () => {
         tooltip.classList.remove('visible');
-    };
+    });
 }
