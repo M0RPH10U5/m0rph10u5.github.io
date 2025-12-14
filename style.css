@@ -316,9 +316,10 @@ p {
 }
 
 .com-logo {
-    opacity: 0.6;
+    opacity: 0.5;
     transition: opacity 0.25s ease, filter 0.25s ease;
-    filter: grayscale(20%);
+    filter: brightness(0.9) saturate(0.8);
+    /* filter: grayscale(20%); */
 }
 
 .com-logo:hover {
