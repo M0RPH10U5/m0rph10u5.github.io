@@ -130,7 +130,8 @@ async function renderRoute(route) {
                 if (Array.isArray(data) && data.length > 0) {
                     const entry = data[0]; // take first entry
                     content.innerHTML = `
-                    <h1>${entry.title || 'Overview'}</h1>
+                    <h1>Overview</h1>
+                    <h3>${entry.title || 'Overview'}</h3>
                     <p>${entry.content || ''}</p>
                     `;
                 } else {

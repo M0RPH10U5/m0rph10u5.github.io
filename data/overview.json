@@ -1,9 +1,10 @@
 [
     {
-        "title": "Organization Overview"
+        "title": "History",
+        "content":"History"
     },
     {
-        "title": "History",
-        "content": "History"
+        "title": "Manifesto",
+        "content": "Manifesto"
     }
 ]
