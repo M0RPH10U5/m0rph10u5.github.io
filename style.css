@@ -105,6 +105,7 @@ body {
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     color: #cfd8e3;
+    position: fixed;
     /* grid-template-columns: 1fr auto 1fr; */
 }
 
@@ -180,8 +181,10 @@ body {
 /* ===== Scrollable Content ===== */
 .content {
     padding: 30px;
+    padding-top: calc(56px + 30px); /* status bar height */
+    padding-bottom: calc(44px + 30px); /* footer height */
     overflow-y: auto;
-    flex-grow: 1;
+    height: 100vh;
 }
 
 h1 {
@@ -194,6 +197,29 @@ p {
     max-width: 900px;
     line-height: 1.6;
     margin-bottom: 30px;
+}
+
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 240px; /* align with main area */
+    right: 0;
+    height: 44px;
+    background-color: #0f1724;
+    border-top: 1px solid #1f2a3a;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: #7fb4ff;
+    z-index: 100;
+}
+
+.status-bar,
+.footer-bar {
+    box-shadow: 0 0 0 1px rgba(127,180,255,0.05);
 }
 
 /* ===== Card Grid (Fleet / Members) ===== */
