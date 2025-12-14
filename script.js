@@ -52,7 +52,6 @@ function renderMembers(members) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${member.name}</h2>
-            <h3>${member.sc-name}</h3>
             <span class="role">${member.role}</span>
             <p>${member.rank || ''}</p>
         `;
@@ -62,19 +61,43 @@ function renderMembers(members) {
 }
 
 /* =========================
-   Filtering
+   Dynamic Filters
 ========================= */
-function attachFilters() {
-    document.querySelectorAll('.filters button').forEach(btn => {
+function generateFilters(containerSelector, items, gridId) {
+    const container = document.querySelector(containerSelector);
+    if (!container || !items || items.length === 0) return;
+
+    // Clear existing buttons
+    container.innerHTML = '';
+
+    // Get unique roles
+    const roles = Array.from(new Set(items.map(i => i.role))).sort();
+
+    // Add "ALL" button first
+    const allBtn = document.createElement('button');
+    allBtn.dataset.filter = 'all';
+    allBtn.textContent = 'ALL';
+    container.appendChild(allBtn);
+
+    // Add buttons for each role
+    roles.forEach(role => {
+        const btn = document.createElement('button');
+        btn.dataset.filter = role;
+        btn.textContent = role.toUpperCase();
+        container.appendChild(btn);
+    });
+
+    // Attach click handlers
+    container.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
             const filter = btn.dataset.filter;
-            const grid = btn.closest('section')?.querySelector('.card-grid');
+            const grid = document.getElementById(gridId);
             if (!grid) return;
 
-            const items = JSON.parse(grid.dataset.items);
-            const filtered = filter === 'all' ? items : items.filter(i => i.role === filter);
+            const itemsData = JSON.parse(grid.dataset.items);
+            const filtered = filter === 'all' ? itemsData : itemsData.filter(i => i.role === filter);
 
-            grid.id === 'fleet-grid' ? renderFleet(filtered) : renderMembers(filtered);
+            gridId === 'fleet-grid' ? renderFleet(filtered) : renderMembers(filtered);
         });
     });
 }
@@ -93,7 +116,6 @@ async function renderRoute(route) {
 
         switch(route) {
             case 'overview':
-                // Expect data: { title: "...", content: "..." }
                 content.innerHTML = `
                     <h1>${data.title || 'Overview'}</h1>
                     <p>${data.content || ''}</p>
@@ -101,38 +123,26 @@ async function renderRoute(route) {
                 break;
 
             case 'fleet':
-                // Expect data: array of ships
                 content.innerHTML = `
                     <h1>Fleet</h1>
-                    <div class="filters">
-                        <button data-filter="all">ALL</button>
-                        <button data-filter="Flagship">FLAGSHIP</button>
-                        <button data-filter="Recon / Data">RECON</button>
-                    </div>
+                    <div class="filters" id="fleet-filters"></div>
                     <div class="card-grid" id="fleet-grid" data-items='${JSON.stringify(data)}'></div>
                 `;
                 renderFleet(data);
-                attachFilters();
+                generateFilters('#fleet-filters', data, 'fleet-grid');
                 break;
 
             case 'members':
-                // Expect data: array of members
                 content.innerHTML = `
                     <h1>Members</h1>
-                    <div class="filters">
-                        <button data-filter="all">ALL</button>
-                        <button data-filter="Captain">CAPTAIN</button>
-                        <button data-filter="Pilot">PILOT</button>
-                        <button data-filter="Engineer">ENGINEER</button>
-                    </div>
+                    <div class="filters" id="member-filters"></div>
                     <div class="card-grid" id="members-grid" data-items='${JSON.stringify(data)}'></div>
                 `;
                 renderMembers(data);
-                attachFilters();
+                generateFilters('#member-filters', data, 'members-grid');
                 break;
 
             case 'logs':
-                // Expect data: array of strings
                 content.innerHTML = `
                     <h1>Captain Logs</h1>
                     <ul>
@@ -145,14 +155,10 @@ async function renderRoute(route) {
                 content.innerHTML = `<h1>Page Not Found</h1>`;
         }
 
-        // Update nav active links
+        // Update nav active class
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.classList.toggle('active', link.dataset.route === route);
         });
-
-        // 🔥 Re-apply status once DOM exists
-        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-        if (cached) updateStatusUI(cached.data);
 
     } catch(err) {
         console.error(err);
