@@ -28,7 +28,7 @@ function renderFleet(fleet) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${ship.name}</h2>
-            <p>${ship.manufacturer || ''}</p>
+            <p><Strong>Manufacturer:&nbsp;</strong>${ship.manufacturer || ''}</p>
             <span class="role">${ship.role}</span>
         `;
         grid.appendChild(card);
