@@ -135,7 +135,7 @@ body {
 
 .status-right .mini-status{
     display: flex;
-    gap: 14px;
+    gap: 18px;
     text-align: center;
 }
 
@@ -160,11 +160,22 @@ body {
     display: inline-block;
     margin-right: 4px;
     cursor: help;
+    transform: translateY(1px);
 }
 
 .mini.operational { background: #4cff9a; }
 .mini.degraded { background: #ffd166; }
 .mini.offline { background: #ff4c4c; }
+
+.service {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.service .label {
+    line-height: 1;
+}
 
 /* ===== Scrollable Content ===== */
 .content {
@@ -302,4 +313,15 @@ p {
 .tooltip .desc {
     font-size: 0.7rem;
     opacity: 0.85;
+}
+
+.com-logo {
+    opacity: 0.6;
+    transition: opacity 0.25s ease, filter 0.25s ease;
+    filter: grayscale(20%);
+}
+
+.com-logo:hover {
+    opacity: 0.9;
+    filter: grayscale(0%);
 }
