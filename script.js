@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== RSI Status Fetch and Cache =====
-const RSI_STATUS_URL = '/data/rsi-status.json';
+const RSI_STATUS_URL = 'https://rsi-status.m0rph10u5.workers.dev';
 const CACHE_KEY = 'rsiStatus';
 const CACHE_TTL = 60 * 1000; // 1 minute cache
 
