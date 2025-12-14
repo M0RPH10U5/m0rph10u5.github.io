@@ -131,7 +131,6 @@ async function renderRoute(route) {
             const res = await fetch(`data/${route}.json`);
             if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
                 data = await res.json();
-                console.log('Loaded route:', route, data);
         }
 
         switch(route) {
@@ -174,28 +173,23 @@ async function renderRoute(route) {
             case 'logs':
                 content.innerHTML = `<h1>Captain Logs</h1>`;
 
-                if (!data) {
-                    content.innerHTML += `<p>No log data loaded.</p>`;
-                    break;
-                }
-
-                const logs = Array.isArray(data)
-                    ? data
-                    : data.logs; // fallback support
-
-                if (!Array.isArray(logs) || logs.length === 0) {
+                if (!Array.isArray(data) || data.length === 0) {
                     content.innerHTML += `<p>No logs found.</p>`;
-                     break;
+                        break;
                 }
 
-                logs.forEach(log => {
-                    content.innerHTML += `
-                        <div class="card">
-                            <h2>${log.title}</h2>
-                            <div class="log-date">${log.date}</div>
-                            <p>${log.entry}</p>
-                        </div>
+                data.forEach((log, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    card.innerHTML = `
+                        <h2>${log.title}</h2>
+                        <div class="log-date">${log.date}</div>
+                        <p>${log.entry}</p>
                     `;
+
+                    content.appendChild(card);
+                    animateCard(card, i); // ✅ THIS WAS MISSING
                 });
                     break;
 
