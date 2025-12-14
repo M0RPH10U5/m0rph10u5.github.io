@@ -227,7 +227,7 @@ p {
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: #7fb4ff;
-    display: block;
+    display: inline-block;
     margin-bottom: 10px;
 }
 
@@ -241,7 +241,7 @@ p {
 .card .sc-name {
     font-size: 0.65rem;
     letter-spacing: 0.1em;
-    color: #698fbd;
+    color: #80aee5;
     display: inline-block;
     margin-bottom: 10px;
 }
