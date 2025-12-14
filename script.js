@@ -37,9 +37,10 @@ document.querySelectorAll('.filters button').forEach(btn => {
 const routes = {
     overview: `
         <h1>Organization Overview</h1>
+        <h2>History</h2>
         <p>
-            Shadow Liner is a private spacefaring organization operating luxury, logistics,
-            and long-range exploration vessels across UEE-controlled space.
+            International Gamers United (IGU), 
+            started as two friends with the idea to create the perfect foundation for having fun.
         </p>
     `,
     fleet: `
