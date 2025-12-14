@@ -171,7 +171,7 @@ async function renderRoute(route) {
                 break;
 
             case 'logs':
-                content.innerHTML = `<h1>Captain Logs</h1>`;
+                content.innerHTML = `<h1>Captains Logs</h1>`;
 
                 if (!Array.isArray(data) || data.length === 0) {
                     content.innerHTML += `<p>No logs found.</p>`;
