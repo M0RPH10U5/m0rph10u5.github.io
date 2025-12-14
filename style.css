@@ -49,6 +49,16 @@ body {
     letter-spacing: 0.1em;
 }
 
+.referal {
+    padding: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    color: #7fb4ff;
+    margin-top: 5px;
+    letter-spacing: 0.1em;
+}
+
 .nav-links {
     list-style: none;
     margin-top: 20px;
@@ -191,7 +201,7 @@ body {
     padding: 30px;
     padding-top: 86px; /* status bar height */
     padding-bottom: 74px; /* footer height */
-    
+
     overflow-y: auto;
     height: 100vh;
 }
