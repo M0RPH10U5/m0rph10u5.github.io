@@ -191,9 +191,9 @@ async function renderRoute(route) {
                         <h2>${log.title}</h2>
                         <div class="log-date">${log.date}</div>
                         <div class="log-user">
-                            <strong>USER:</strong <span>${log.user}</span>
+                            <strong>USER:</strong> <span>${log.user}</span>
                         </div>
-                        
+
                         <p>${log.entry}</p>
                     `;
 
