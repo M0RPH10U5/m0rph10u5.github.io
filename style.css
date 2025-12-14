@@ -79,8 +79,8 @@ body {
 }
 
 .nav-com {
-    margin-top: 20px;
-    
+    margin-top: auto; /* push to bottom */
+    padding-bottom: 20px; /* optional spacing from bottom */
 }
 
 /* ===== Main Area ===== */
