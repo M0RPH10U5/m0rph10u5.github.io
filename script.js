@@ -190,6 +190,7 @@ async function renderRoute(route) {
                     card.innerHTML = `
                         <h2>${log.title}</h2>
                         <div class="log-date">${log.date}</div>
+                        <h4>${log.user}</h4>
                         <p>${log.entry}</p>
                     `;
 
