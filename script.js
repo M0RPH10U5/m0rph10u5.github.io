@@ -132,6 +132,8 @@ async function renderRoute(route) {
             if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
                 data = await res.json();
         }
+        data = await res.json();
+        console.log('Loaded route:', route, data);
 
         switch(route) {
             case 'overview':
