@@ -55,6 +55,7 @@ function renderMembers(members) {
             <h4>SC Name:</h4><span class="sc-name"> ${member["sc-name"]}</span>
             <span class="role">${member.role}</span>
             <strong>Specialty:</strong> ${member.specialty || 'N/A'}
+            <br />
             <strong>Ship:</strong> ${member.ship || 'N/A'}
         `;
         grid.appendChild(card);
