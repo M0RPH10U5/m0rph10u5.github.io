@@ -42,6 +42,19 @@ const routes = {
             International Gamers United (IGU), 
             started as two friends with the idea to create the perfect foundation for having fun.
         </p>
+
+        <h2>Manifesto</h2>
+        <p>
+            As an organization, we strive to provide and uphold the best of expectations from our clientele. 
+            As such, we do our part to provide the best of experiences when it comes to travel and/or cargo transport.
+        </p>
+
+        <h2>Charter</h2>
+        <p>
+            No member of International Gamers United shall bring drama to the organization. 
+            Any drama found within the organization is subject to banishment from the organization. 
+            we are here to have fun, help one another, and grow.
+        </p>
     `,
     fleet: `
         <h1>Fleet</h1>
