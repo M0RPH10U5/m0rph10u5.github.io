@@ -310,6 +310,22 @@ p {
     margin-bottom: 6px;
 }
 
+.card .log-date {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 6px;
+}
+
+.card .log-user {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+}
+
+.card .log-user span {
+    color: #7fb4ff;
+}
+
 /* Fleet Card Loading */
 .loading {
     opacity: 0.6;
