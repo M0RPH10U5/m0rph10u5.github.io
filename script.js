@@ -135,12 +135,23 @@ function mapStatusToClass(status) {
 }
 
 // Update the Status Bar UI
+function mapSummaryStatus(status) {
+    switch (status.toLowerCase()) {
+        case 'operational': return { text: 'ONLINE', class: 'online' };
+        case 'degraded':
+        case 'partial_outage': return { text: 'DEGRADED', class: 'degraded' };
+        case 'major_outage': return { text: 'OFFLINE', class: 'offline' };
+        default: return { text: 'UNKNOWN', class: 'offline' };
+    }
+}
+
 function updateStatusUI(data) {
     // Update summary status (status-right)
-    const summary = data.summaryStatus || 'ONLINE';
+    const summaryData = mapSummaryStatus(data.summaryStatus || 'operational');
     const statusLeft = document.getElementById('summary-status');
-    statusLeft.textContent = summary.toUpperCase();
-    statusLeft.className = `status-left ${summary.toLowerCase()}`;
+
+    statusLeft.textContent = summaryData.text;
+    statusLeft.className = `status-left ${summaryData.class}`;
 
     // Update mini indicators
     const services = data.services || [];

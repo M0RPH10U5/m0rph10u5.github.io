@@ -20,15 +20,6 @@ body {
     to { opacity: 1; filter: none; }
 }
 
-.status-left.degraded,
-.status-left.offline {
-    animation: alert 1.2s infinite;
-}
-
-@keyframes alert {
-    50% { opacity: 0.5; }
-}
-
 /* ===== Sidebar ===== */
 .sidebar {
     width: 240px;
@@ -148,6 +139,15 @@ body {
     50% { opacity: 0.6; }
 }
 
+.status-left.degraded,
+.status-left.offline {
+    animation: alert 1.2s infinite;
+}
+
+@keyframes alert {
+    50% { opacity: 0.5; }
+}
+
 .mini {
     width: 8px;
     height: 8px;
@@ -157,7 +157,7 @@ body {
 
 .mini.operational { background: #4cff9a; }
 .mini.degraded { background: #ffd166; }
-.mini.down { background: #ff4c4c; }
+.mini.offline { background: #ff4c4c; }
 
 /* ===== Scrollable Content ===== */
 .content {
