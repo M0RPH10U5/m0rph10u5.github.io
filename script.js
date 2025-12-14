@@ -1,6 +1,6 @@
 let tooltip;
 let rsiServices = [];
-let data = null;
+
 
 /* =========================
    Utility: Animate card entry
@@ -183,8 +183,13 @@ async function renderRoute(route) {
                         `;
                     });
                 }
+<<<<<<< HEAD
+                    break;
+
+=======
                 break;
                 
+>>>>>>> 1690dc5441dc9f3ccb04bf29db5ed7879b50e8f8
             case 'about':
                 content.innerHTML = `
                     <h1>About This Site</h1>
