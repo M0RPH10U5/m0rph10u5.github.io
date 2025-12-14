@@ -272,7 +272,7 @@ p {
     border-radius: 4px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     z-index: 9999;
-    max-width: 240px;
+    max-width: min(240px, calc(100vw - 24px));
     pointer-events: none;
     opacity: 0;
     transform: translateY(6px);

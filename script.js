@@ -267,8 +267,19 @@ function attachTooltip(el, service) {
         `;
 
         const rect = el.getBoundingClientRect();
-        tooltip.style.left = `${rect.left + window.scrollX}px`;
-        tooltip.style.top = `${rect.bottom + window.scrollY + 8}px`;
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let left = rect.left + window.scrollX;
+        let top  = rect.bottom + window.scrollY + 8;
+
+        // Prevent overflow behind scrollbar / viewport edge
+        const viewportWidth = window.innerWidth;
+        if (left + tooltipRect.width > viewportWidth - 12) {
+            left = viewportWidth - tooltipRect.width - 12;
+        }
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
         tooltip.classList.add('visible');
     });
 
