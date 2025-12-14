@@ -98,53 +98,66 @@ body {
 
 /* ===== Top Status Bar ===== */
 .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 56px;
+    padding: 0 20px;
     background-color: #0f1724;
     border-bottom: 1px solid #1f2a3a;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 0 20px;
     font-family: 'Orbitron', sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
+    color: #cfd8e3;
+    /* grid-template-columns: 1fr auto 1fr; */
 }
 
 .status-left {
     text-align: left;
     letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.status-left.online {
+    color: #4cff9a;
+    animation: pulse 5s infinite;
+}
+.status-left.degraded {
+    color: #ffd166;
+    animation: pulse 3.5s infinite;
+}
+.status-left.offline {
+    color: #ff4c4c;
+    animation: pulse 2s infinite;
 }
 
 .status-center {
     text-align: center;
     color: #cfd8e3;
+    flex: 1;
 }
 
-.status-right {
-    text-align: right;
-    letter-spacing: 0.15em;
-}
-
-/* ===== RSI Network States ===== */
-.status-left.online {
-    color: #4cff9a; /* green */
-    animation: pulse 5s infinite;
-}
-
-.status-left.degraded {
-    color: #ffd166; /* amber */
-    animation: pulse 3.5s infinite;
-}
-
-.status-left.offline {
-    color: #ff4c4c; /* red */
-    animation: pulse 2s infinite;
+.status-right .mini-status{
+    display: flex;
+    gap: 10px;
+    text-align: center;
 }
 
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
 }
+
+.mini {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.mini.operational { background: #4cff9a; }
+.mini.degraded { background: #ffd166; }
+.mini.down { background: #ff4c4c; }
 
 /* ===== Scrollable Content ===== */
 .content {
@@ -238,15 +251,3 @@ p {
         transform: translateY(0) scale(1);
     }
 }
-
-.mini {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-.mini.operational { background: #4cff9a; }
-.mini.degraded { background: #ffd166; }
-.mini.down { background: #ff4c4c; }

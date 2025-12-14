@@ -138,12 +138,9 @@ function mapStatusToClass(status) {
 function updateStatusUI(data) {
     // Update summary status (status-right)
     const summary = data.summaryStatus || 'ONLINE';
-    const statusLeft = document.querySelector('.status-left');
-    statusRight.textContent = summary.toUpperCase();
-
-    // Update status-right color class
-    statusRight.classList.remove('online', 'degraded', 'offline');
-    statusRight.classList.add(summary.toLowerCase());
+    const statusLeft = document.getElementById('summary-status');
+    statusLeft.textContent = summary.toUpperCase();
+    statusLeft.className = `status-left ${summary.toLowerCase()}`;
 
     // Update mini indicators
     const services = data.services || [];
