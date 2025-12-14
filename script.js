@@ -198,8 +198,8 @@ function updateStatusUI(data) {
         rsiServices.find(s => s.name === name);
 
     const platform = getService('Platform');
-    const pu = getService('PU');
-    const ac = getService('AC');
+    const pu = getService('Persistent Universe');
+    const ac = getService('Arena Commander');
 
     if (platform) {
         const el = document.getElementById('Platform');
