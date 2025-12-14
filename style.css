@@ -489,3 +489,70 @@ p {
 .log-toggle:hover {
     text-decoration: underline;
 }
+
+/* ===== RSI Scrollbar (WebKit) ===== */
+.content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: #0b0f14;
+    border-left: 1px solid #1f2a3a;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #1b2433,
+        #0f1724
+    );
+    border-radius: 6px;
+    border: 1px solid #2a3a52;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        #23304a,
+        #152033
+    );
+}
+
+/* ===== Firefox RSI Scrollbar ===== */
+.content {
+    scrollbar-width: thin;
+    scrollbar-color: #2a3a52 #0b0f14;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #2a3a52 #0b0f14;
+}
+
+* ===== RSI Scrollbar (WebKit) ===== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b0f14;
+    border-left: 1px solid #1f2a3a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #1b2433,
+        #0f1724
+    );
+    border-radius: 6px;
+    border: 1px solid #2a3a52;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        #23304a,
+        #152033
+    );
+}
