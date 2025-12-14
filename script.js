@@ -1,6 +1,6 @@
 let tooltip;
 let rsiServices = [];
-
+let data = null;
 
 /* =========================
    Utility: Animate card entry
