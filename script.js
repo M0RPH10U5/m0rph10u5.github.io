@@ -10,30 +10,66 @@ function animateCard(card, index) {
 }
 
 /* =========================
+   Card Rendering Functions
+========================= */
+function renderFleet(fleet) {
+    const grid = document.getElementById('fleet-grid');
+    if (!grid) return;
+
+    grid.innerHTML = ''; // clear old content
+
+    if (!fleet || fleet.length === 0) {
+        grid.innerHTML = `<p class="loading">No fleet data available.</p>`;
+        return;
+    }
+
+    fleet.forEach((ship, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h2>${ship.name}</h2>
+            <span class="role">${ship.role}</span>
+            <p>${ship.type || ''}</p>
+        `;
+        grid.appendChild(card);
+        animateCard(card, i);
+    });
+}
+
+function renderMembers(members) {
+    const grid = document.getElementById('members-grid');
+    if (!grid) return;
+
+    grid.innerHTML = ''; // clear old content
+
+    if (!members || members.length === 0) {
+        grid.innerHTML = `<p class="loading">No members found.</p>`;
+        return;
+    }
+
+    members.forEach((member, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h2>${member.name}</h2>
+            <span class="role">${member.role}</span>
+            <p>${member.rank || ''}</p>
+        `;
+        grid.appendChild(card);
+        animateCard(card, i);
+    });
+}
+
+/* =========================
    Filtering
 ========================= */
-document.querySelectorAll('.filters button').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        const grid = btn.closest('section')
-            ?.querySelector('.card-grid') || document.querySelector('.card-grid');
-
-        const items = JSON.parse(grid.dataset.items);
-        const filtered = filter === 'all'
-            ? items
-            : items.filter(i => i.role === filter);
-
-        grid.id === 'fleet-grid'
-            ? renderFleet(filtered)
-            : renderMembers(filtered);
-    });
-});
-
 function attachFilters() {
     document.querySelectorAll('.filters button').forEach(btn => {
         btn.addEventListener('click', () => {
             const filter = btn.dataset.filter;
-            const grid = btn.closest('section')?.querySelector('.card-grid') || document.querySelector('.card-grid');
+            const grid = btn.closest('section')?.querySelector('.card-grid');
+            if (!grid) return;
+
             const items = JSON.parse(grid.dataset.items);
             const filtered = filter === 'all' ? items : items.filter(i => i.role === filter);
 
@@ -42,102 +78,29 @@ function attachFilters() {
     });
 }
 
-/* ===========================
-     Per Route Loading
-=========================== */
-// Define your pages as functions or HTML strings
-const routes = {
-    overview: `
-        <h1>Organization Overview</h1>
-        <h2>History</h2>
-        <p>
-            International Gamers United (IGU), 
-            started as two friends with the idea to create the perfect foundation for having fun.
-        </p>
-
-        <h2>Manifesto</h2>
-        <p>
-            As an organization, we strive to provide and uphold the best of expectations from our clientele. 
-            As such, we do our part to provide the best of experiences when it comes to travel and/or cargo transport.
-        </p>
-
-        <h2>Charter</h2>
-        <p>
-            No member of International Gamers United shall bring drama to the organization. 
-            Any drama found within the organization is subject to banishment from the organization. 
-            we are here to have fun, help one another, and grow.
-        </p>
-    `,
-    fleet: `
-        <h1>Fleet</h1>
-        <div class="filters">
-            <button data-filter="all">ALL</button>
-            <button data-filter="Flagship">FLAGSHIP</button>
-            <button data-filter="Recon / Data">RECON</button>
-        </div>
-
-        <div class="card-grid" id="fleet-grid">
-            <p class="loading">Loading Fleet Data...</p>
-        </div>
-    `,
-    members: `
-        <h1>Members</h1>
-        <div class="filters">
-            <button data-filter="all">ALL</button>
-            <button data-filter="Captain">CAPTAIN</button>
-            <button data-filter="Pilot">PILOT</button>
-            <button data-filter="Engineer">ENGINEER</button>
-        </div>
-
-        <div class="card-grid" id="member-grid">
-            <p class="loading">Loading Member Data...</p>
-        </div>
-    `,
-    logs: `
-        <h1>Captain Logs</h1>
-        <p>Log entries from recent missions will appear here.</p>
-    `
-};
-
-// Function to render page content
-/* function renderRoute(route) {
-    const content = document.querySelector('.content');
-    if (routes[route]) {
-        content.innerHTML = routes[route];
-    } else {
-        content.innerHTML = `<h1>Page Not Found</h1><p>The page '${route}' does not exist.</p>`;
-    }
-
-    // Update active nav link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.toggle('active', link.dataset.route === route);
-    });
-
-    // 🔥 Re-apply status once DOM exists
-    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-    if (cached) updateStatusUI(cached.data);
-} */
+/* =========================
+   Route Rendering
+========================= */
 async function renderRoute(route) {
     const content = document.querySelector('.content');
+    if (!content) return;
 
     try {
-        // Fetch JSON
         const res = await fetch(`data/${route}.json`);
-        if (!res.ok) {
-            console.error('Fetch failed', res.status, res.statusText, `data/${route}.json`);
-            throw new Error('JSON not found');
-        }
+        if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
         const data = await res.json();
 
-        // Render based on route
         switch(route) {
             case 'overview':
+                // Expect data: { title: "...", content: "..." }
                 content.innerHTML = `
-                    <h1>${data.title}</h1>
-                    <p>${data.content}</p>
+                    <h1>${data.title || 'Overview'}</h1>
+                    <p>${data.content || ''}</p>
                 `;
                 break;
+
             case 'fleet':
+                // Expect data: array of ships
                 content.innerHTML = `
                     <h1>Fleet</h1>
                     <div class="filters">
@@ -145,11 +108,14 @@ async function renderRoute(route) {
                         <button data-filter="Flagship">FLAGSHIP</button>
                         <button data-filter="Recon / Data">RECON</button>
                     </div>
-                    <div id="fleet-grid" data-items='${JSON.stringify(data)}'></div>
+                    <div class="card-grid" id="fleet-grid" data-items='${JSON.stringify(data)}'></div>
                 `;
-                renderFleet(data); // reuse your fleet rendering function
+                renderFleet(data);
+                attachFilters();
                 break;
+
             case 'members':
+                // Expect data: array of members
                 content.innerHTML = `
                     <h1>Members</h1>
                     <div class="filters">
@@ -158,18 +124,27 @@ async function renderRoute(route) {
                         <button data-filter="Pilot">PILOT</button>
                         <button data-filter="Engineer">ENGINEER</button>
                     </div>
-                    <div id="members-grid" data-items='${JSON.stringify(data)}'></div>
+                    <div class="card-grid" id="members-grid" data-items='${JSON.stringify(data)}'></div>
                 `;
                 renderMembers(data);
+                attachFilters();
                 break;
+
             case 'logs':
-                content.innerHTML = `<h1>Captain Logs</h1><ul>${data.map(log => `<li>${log}</li>`).join('')}</ul>`;
+                // Expect data: array of strings
+                content.innerHTML = `
+                    <h1>Captain Logs</h1>
+                    <ul>
+                        ${Array.isArray(data) ? data.map(log => `<li>${log}</li>`).join('') : '<li>No logs found.</li>'}
+                    </ul>
+                `;
                 break;
+
             default:
                 content.innerHTML = `<h1>Page Not Found</h1>`;
         }
 
-        // Update nav links
+        // Update nav active links
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.classList.toggle('active', link.dataset.route === route);
         });
@@ -178,24 +153,22 @@ async function renderRoute(route) {
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached) updateStatusUI(cached.data);
 
-        // Reattach filters
-        attachFilters();
-    } catch (err) {
-        content.innerHTML = `<h1>Error</h1><p>Could not load data for '${route}'</p>`;
+    } catch(err) {
         console.error(err);
+        content.innerHTML = `<h1>Error</h1><p>Could not load data for '${route}'</p>`;
     }
-    attachFilters();
 }
 
-// Listen for hash changes
+/* =========================
+   Routing
+========================= */
 window.addEventListener('hashchange', () => {
     const route = location.hash.slice(2) || 'overview';
     renderRoute(route);
 });
 
-// Initial page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial fetch
+// Initial fetch
     fetchRSIStatus();
     // Optional: auto-refresh every 60 seconds
     setInterval(fetchRSIStatus, CACHE_TTL);
