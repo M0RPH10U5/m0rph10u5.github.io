@@ -271,6 +271,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRoute(route);
 });
 
+document.querySelectorAll('.nav-group').forEach(group => {
+    if (group.querySelector('a.active')) {
+        group.classList.add('open');
+    }
+});
+
+
+document.querySelectorAll('.nav-parent').forEach(parent => {
+    parent.addEventListener('click', () => {
+        parent.closest('.nav-group').classList.toggle('open');
+    });
+});
+
+
 // ===== RSI Status Fetch and Cache =====
 const RSI_STATUS_URL = 'https://rsi-status.m0rph10u5.workers.dev';
 const CACHE_KEY = 'rsiStatus';
