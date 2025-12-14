@@ -1,12 +1,17 @@
 [
     {
-        "name": "Origin 890 Jump",
-        "role": "Luxury",
-        "discription": "Long range luxury command vessel."
+        "name": "890 Jump",
+        "manufacturer": "Origin",
+        "role": "Exploration / Luxury Touring"
     },
     {
-        "name": "RSI Constellation Taurus",
-        "role": "Medium Frieght",
-        "discription": "Well rounded ship"
+        "name": "Constellation Taurus",
+        "manufacturer": "RSI",
+        "role": "Transport / Medium Freight"
+    },
+    {
+        "name": "Arrow",
+        "manufacturer": "Anvil",
+        "role": "Combat / Light Fighter"
     }
 ]

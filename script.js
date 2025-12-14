@@ -28,8 +28,8 @@ function renderFleet(fleet) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${ship.name}</h2>
+            <p>${ship.manufacturer || ''}</p>
             <span class="role">${ship.role}</span>
-            <p>${ship.type || ''}</p>
         `;
         grid.appendChild(card);
         animateCard(card, i);
