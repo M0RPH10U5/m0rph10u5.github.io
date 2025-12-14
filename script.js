@@ -131,9 +131,8 @@ async function renderRoute(route) {
             const res = await fetch(`data/${route}.json`);
             if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
                 data = await res.json();
+                console.log('Loaded route:', route, data);
         }
-        data = await res.json();
-        console.log('Loaded route:', route, data);
 
         switch(route) {
             case 'overview':
