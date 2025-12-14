@@ -263,3 +263,5 @@ function attachTooltip(el, service) {
         tooltip.classList.remove('visible');
     });
 }
+
+console.table(rsiServices.map(s => ({ name: s.name, status: s.status })));
