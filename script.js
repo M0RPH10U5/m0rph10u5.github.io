@@ -29,6 +29,18 @@ document.querySelectorAll('.filters button').forEach(btn => {
     });
 });
 
+function attachFilters() {
+    document.querySelectorAll('.filters button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+            const grid = btn.closest('section')?.querySelector('.card-grid') || document.querySelector('.card-grid');
+            const items = JSON.parse(grid.dataset.items);
+            const filtered = filter === 'all' ? items : items.filter(i => i.role === filter);
+
+            grid.id === 'fleet-grid' ? renderFleet(filtered) : renderMembers(filtered);
+        });
+    });
+}
 
 /* ===========================
      Per Route Loading
@@ -169,6 +181,7 @@ async function renderRoute(route) {
         content.innerHTML = `<h1>Error</h1><p>Could not load data for '${route}'</p>`;
         console.error(err);
     }
+    attachFilters();
 }
 
 // Listen for hash changes
