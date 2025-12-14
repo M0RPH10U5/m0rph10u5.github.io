@@ -223,25 +223,37 @@ p {
     margin-bottom: 8px;
 }
 
-.card .role {
+.card .role-row {
     font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+}
+
+.card .role {
     color: #7fb4ff;
-    display: block;
+}
+
+.card .sc-row {
     margin-bottom: 10px;
 }
 
 .card .sc-label {
     font-size: 0.75rem;
     letter-spacing: 0.1em;
-    margin-bottom: 10px;
+    margin-right: 6px;
 }
 
 .card .sc-name {
     font-size: 0.65rem;
     letter-spacing: 0.1em;
     color: #7fb4ff;
-    margin-bottom: 10px;
+}
+
+.card .specialty-row,
+.card .ship-row {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
 }
 
 /* Fleet Card Loading */
