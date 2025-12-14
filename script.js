@@ -64,8 +64,8 @@ const routes = {
             <button data-filter="Recon / Data">RECON</button>
         </div>
 
-        <div id="fleet-grid">
-            <p class="loading">Loading Fleet...</p>
+        <div class="card-grid" id="fleet-grid">
+            <p class="loading">Loading Fleet Data...</p>
         </div>
     `,
     members: `
@@ -77,7 +77,9 @@ const routes = {
             <button data-filter="Engineer">ENGINEER</button>
         </div>
 
-        <p>List of current members will appear here.</p>
+        <div class="card-grid" id="member-grid">
+            <p class="loading">Loading Member Data...</p>
+        </div>
     `,
     logs: `
         <h1>Captain Logs</h1>
