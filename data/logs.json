@@ -1,0 +1,22 @@
+[
+    {
+        "date": "2954-03-12",
+        "title": "Departure from Area18",
+        "entry": "Departed Area18 under clear conditions. Quantum drive calibration successful. Crew morale remains high."
+    },
+    {
+        "date": "2954-03-14",
+        "title": "Yela Encounter",
+        "entry": "Detected Vanduul scout signatures near Yela. Altered course and maintained radio silence. No engagement."
+    },
+    {
+        "date": "2954-03-18",
+        "title": "Everus Harbor Docking",
+        "entry": "Docked at Everus Harbor for hull repairs, fuel replenishment, and crew rotation."
+    },
+    {
+        "date": "2954-03-22",
+        "title": "Anomalous Scan",
+        "entry": "Long-range sensors picked up an unidentified anomaly in Stanton. Logged coordinates for future investigation."
+     }
+]

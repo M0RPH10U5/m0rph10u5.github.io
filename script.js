@@ -163,14 +163,36 @@ async function renderRoute(route) {
                 break;
 
             case 'logs':
-                content.innerHTML = `
-                    <h1>Captain Logs</h1>
-                    <ul>
-                        ${Array.isArray(data) ? data.map(log => `<li>${log}</li>`).join('') : '<li>No logs found.</li>'}
-                    </ul>
-                `;
-                break;
+                content.innerHTML = `<h1>Captain Logs</h1>`;
 
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach(log => {
+                    content.innerHTML += `
+                        <div class="card">
+                            <h2>${log.title}</h2>
+                            <div class="log-date">${log.date}</div>
+                            <p>${log.entry}</p>
+                        </div>
+                    `;
+                    });
+                } else {
+                    content.innerHTML += `<p>No logs found.</p>`;
+                }
+                    break;
+            case 'about':
+                content.innerHTML = `
+                    <h1>About This Site</h1>
+
+                    <h2>Created By</h2>
+                        <p>
+                            This site is Created by M0RPH10U5. SC Name: 1337-m0rph10u5
+                        </p>
+                        <p>
+                            Referal Code: STAR-32MJ-PH7J
+                        </p>
+                `;
+                    break;
+            
             default:
                 content.innerHTML = `<h1>Page Not Found</h1>`;
         }
