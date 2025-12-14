@@ -239,6 +239,9 @@ function getService(name) {
     return svc;
 }
 
+function getScrollbarWidth() {
+    return window.innerWidth - document.documentElement.clientWidth;
+}
 
 // Create tooltip element once
 function createTooltip() {
@@ -267,10 +270,16 @@ function attachTooltip(el, service) {
         `;
 
         const rect = el.getBoundingClientRect();
+        
+        // Force layout BEFORE measuring tooltip
+        tooltip.classList.add('visible');
         const tooltipRect = tooltip.getBoundingClientRect();
 
         let left = rect.left + window.scrollX;
         let top  = rect.bottom + window.scrollY + 8;
+
+        const scrollbarWidth = getScrollbarWidth();
+        const maxX = window.innerWidth - scrollbarWidth - tooltipRect.width - 12;
 
         // Prevent overflow behind scrollbar / viewport edge
         const viewportWidth = window.innerWidth;
@@ -278,9 +287,12 @@ function attachTooltip(el, service) {
             left = viewportWidth - tooltipRect.width - 12;
         }
 
+        if (left > maxX) {
+            left = maxX;
+        }
+
         tooltip.style.left = `${left}px`;
         tooltip.style.top = `${top}px`;
-        tooltip.classList.add('visible');
     });
 
     el.addEventListener('mouseleave', () => {
