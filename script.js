@@ -52,8 +52,8 @@ function renderMembers(members) {
         card.className = 'card';
         card.innerHTML = `
             <h2>${member.name}</h2>
-            <span class="sc-label">SC Name:</span><span class="sc-name">&nbsp;${member["sc-name"]}</span>
-            <span class="role">${member.role}</span>
+            <span class="sc-label"><strong>SC Name:</strong></span><span class="sc-name">&nbsp;${member["sc-name"]}</span>
+            <strong>Role:</strong><span class="role">${member.role}</span>
             <strong>Specialty:</strong> ${member.specialty || 'N/A'}
             <br />
             <strong>Ship:</strong> ${member.ship || 'N/A'}
