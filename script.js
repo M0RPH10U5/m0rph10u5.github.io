@@ -88,7 +88,7 @@ const routes = {
 };
 
 // Function to render page content
-function renderRoute(route) {
+/* function renderRoute(route) {
     const content = document.querySelector('.content');
     if (routes[route]) {
         content.innerHTML = routes[route];
@@ -104,6 +104,71 @@ function renderRoute(route) {
     // 🔥 Re-apply status once DOM exists
     const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
     if (cached) updateStatusUI(cached.data);
+} */
+async function renderRoute(route) {
+    const content = document.querySelector('.content');
+
+    try {
+        // Fetch JSON
+        const res = await fetch(`data/${route}.json`);
+        if (!res.ok) throw new Error('JSON not found');
+        const data = await res.json();
+
+        // Render based on route
+        switch(route) {
+            case 'overview':
+                content.innerHTML = `
+                    <h1>${data.title}</h1>
+                    <p>${data.content}</p>
+                `;
+                break;
+            case 'fleet':
+                content.innerHTML = `
+                    <h1>Fleet</h1>
+                    <div class="filters">
+                        <button data-filter="all">ALL</button>
+                        <button data-filter="Flagship">FLAGSHIP</button>
+                        <button data-filter="Recon / Data">RECON</button>
+                    </div>
+                    <div id="fleet-grid" data-items='${JSON.stringify(data)}'></div>
+                `;
+                renderFleet(data); // reuse your fleet rendering function
+                break;
+            case 'members':
+                content.innerHTML = `
+                    <h1>Members</h1>
+                    <div class="filters">
+                        <button data-filter="all">ALL</button>
+                        <button data-filter="Captain">CAPTAIN</button>
+                        <button data-filter="Pilot">PILOT</button>
+                        <button data-filter="Engineer">ENGINEER</button>
+                    </div>
+                    <div id="members-grid" data-items='${JSON.stringify(data)}'></div>
+                `;
+                renderMembers(data);
+                break;
+            case 'logs':
+                content.innerHTML = `<h1>Captain Logs</h1><ul>${data.map(log => `<li>${log}</li>`).join('')}</ul>`;
+                break;
+            default:
+                content.innerHTML = `<h1>Page Not Found</h1>`;
+        }
+
+        // Update nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.toggle('active', link.dataset.route === route);
+        });
+
+        // 🔥 Re-apply status once DOM exists
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        if (cached) updateStatusUI(cached.data);
+
+        // Reattach filters
+        attachFilters();
+    } catch (err) {
+        content.innerHTML = `<h1>Error</h1><p>Could not load data for '${route}'</p>`;
+        console.error(err);
+    }
 }
 
 // Listen for hash changes
