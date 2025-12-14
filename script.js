@@ -1,5 +1,6 @@
 let tooltip;
 let rsiServices = [];
+let data = null;
 
 /* =========================
    Utility: Animate card entry
@@ -121,9 +122,16 @@ async function renderRoute(route) {
     if (!content) return;
 
     try {
-        const res = await fetch(`data/${route}.json`);
+        /* const res = await fetch(`data/${route}.json`);
         if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
-        const data = await res.json();
+        const data = await res.json(); */
+
+        // Only fetch JSON for routes that need it
+        if (!['about'].includes(route)) {
+            const res = await fetch(`data/${route}.json`);
+            if (!res.ok) throw new Error(`JSON not found: data/${route}.json`);
+                data = await res.json();
+        }
 
         switch(route) {
             case 'overview':
