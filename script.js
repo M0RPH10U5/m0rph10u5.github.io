@@ -127,10 +127,15 @@ async function renderRoute(route) {
 
         switch(route) {
             case 'overview':
-                content.innerHTML = `
-                    <h1>${data.title || 'Overview'}</h1>
-                    <p>${data.content || ''}</p>
-                `;
+                if (Array.isArray(data) && data.length > 0) {
+                    const entry = data[0]; // take first entry
+                    content.innerHTML = `
+                    <h1>${entry.title || 'Overview'}</h1>
+                    <p>${entry.content || ''}</p>
+                    `;
+                } else {
+                    content.innerHTML = `<h1>Overview</h1><p>No content found.</p>`;
+                }
                 break;
 
             case 'fleet':
