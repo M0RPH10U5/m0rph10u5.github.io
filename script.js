@@ -92,6 +92,11 @@ window.addEventListener('hashchange', () => {
 
 // Initial page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Initial fetch
+    fetchRSIStatus();
+    // Optional: auto-refresh every 60 seconds
+    setInterval(fetchRSIStatus, CACHE_TTL);
+
     const route = location.hash.slice(2) || 'overview';
     renderRoute(route);
 });
@@ -155,6 +160,11 @@ function updateStatusUI(data) {
     statusLeft.textContent = summaryData.text;
     statusLeft.className = `status-left ${summaryData.class}`;
 
+    const statusRight = document.querySelector('.status-right');
+    if (statusRight) {
+        statusRight.className = `status-right ${summaryData.class}`;
+    }
+
     rsiServices = data.services || [];
 
     if (!tooltip) createTooltip();
@@ -184,12 +194,6 @@ function updateStatusUI(data) {
         attachTooltip(el, ac);
     }
 }
-
-// Initial fetch
-fetchRSIStatus();
-
-// Optional: auto-refresh every 60 seconds
-setInterval(fetchRSIStatus, CACHE_TTL);
 
 // Create tooltip element once
 function createTooltip() {
