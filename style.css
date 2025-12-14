@@ -94,18 +94,26 @@ body {
 
 /* ===== Top Status Bar ===== */
 .status-bar {
+    position: fixed;
+    top: 0;
+    left: 240px;                 /* sidebar width */
+    width: calc(100% - 240px);   /* EXACT remaining width */
+    height: 56px;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 56px;
+
     padding: 0 20px;
     background-color: #0f1724;
     border-bottom: 1px solid #1f2a3a;
+
     font-family: 'Orbitron', sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     color: #cfd8e3;
-    position: fixed;
+
+    z-index: 100;
     /* grid-template-columns: 1fr auto 1fr; */
 }
 
@@ -181,8 +189,9 @@ body {
 /* ===== Scrollable Content ===== */
 .content {
     padding: 30px;
-    padding-top: calc(56px + 30px); /* status bar height */
-    padding-bottom: calc(44px + 30px); /* footer height */
+    padding-top: 86px; /* status bar height */
+    padding-bottom: 74px; /* footer height */
+    
     overflow-y: auto;
     height: 100vh;
 }
@@ -202,18 +211,22 @@ p {
 .footer-bar {
     position: fixed;
     bottom: 0;
-    left: 240px; /* align with main area */
-    right: 0;
+    left: 240px;
+    width: calc(100% - 240px);
     height: 44px;
+
     background-color: #0f1724;
     border-top: 1px solid #1f2a3a;
+
     display: flex;
     align-items: center;
     padding: 0 20px;
+
     font-family: 'Orbitron', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     color: #7fb4ff;
+
     z-index: 100;
 }
 
