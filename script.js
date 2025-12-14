@@ -96,6 +96,10 @@ function renderRoute(route) {
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.classList.toggle('active', link.dataset.route === route);
     });
+
+    // 🔥 Re-apply status once DOM exists
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    if (cached) updateStatusUI(cached.data);
 }
 
 // Listen for hash changes
@@ -179,8 +183,10 @@ function mapSummaryStatus(status) {
 }
 
 function updateStatusUI(data) {
-    const summaryData = mapSummaryStatus(data.summaryStatus || 'operational');
     const statusLeft = document.getElementById('summary-status');
+    if (!statusLeft) return; // 🔴 DOM not ready yet
+
+    const summaryData = mapSummaryStatus(data.summaryStatus || 'operational');
 
     statusLeft.textContent = summaryData.text;
     statusLeft.className = `status-left ${summaryData.class}`;
@@ -194,6 +200,15 @@ function updateStatusUI(data) {
 
     if (!tooltip) createTooltip();
 
+    const platformEl = document.getElementById('Platform');
+    const puEl = document.getElementById('Persistent-Universe');
+    const acEl = document.getElementById('Arena-Commander');
+
+    if (!platformEl || !puEl || !acEl) {
+        // 🔴 status bar not mounted yet
+        return;
+    }
+
     const getService = (name) =>
         rsiServices.find(s => s.name === name);
 
@@ -202,24 +217,19 @@ function updateStatusUI(data) {
     const ac = getService('Arena Commander');
 
     if (platform) {
-        const el = document.getElementById('Platform');
-        el.className = `mini ${mapStatusToClass(platform.status)}`;
-        attachTooltip(el, platform);
+        platformEl.className = `mini ${mapStatusToClass(platform.status)}`;
+        attachTooltip(platformEl, platform);
     }
 
     if (pu) {
-        const el = document.getElementById('Persistent-Universe');
-        el.className = `mini ${mapStatusToClass(pu.status)}`;
-        attachTooltip(el, pu);
+        puEl.className = `mini ${mapStatusToClass(pu.status)}`;
+        attachTooltip(puEl, pu);
     }
 
     if (ac) {
-        const el = document.getElementById('Arena-Commander');
-        el.className = `mini ${mapStatusToClass(ac.status)}`;
-        attachTooltip(el, ac);
+        acEl.className = `mini ${mapStatusToClass(ac.status)}`;
+        attachTooltip(acEl, ac);
     }
-
-    console.table(rsiServices.map(s => ({ name: s.name, status: s.status })));
 
 }
 
@@ -266,3 +276,9 @@ function attachTooltip(el, service) {
         tooltip.classList.remove('visible');
     });
 }
+
+console.log('Status elements:',
+    document.getElementById('Platform'),
+    document.getElementById('Persistent-Universe'),
+    document.getElementById('Arena-Commander')
+);
