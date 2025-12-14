@@ -178,7 +178,12 @@ async function renderRoute(route) {
                         break;
                 }
 
-                data.forEach((log, i) => {
+                // Sort Newest -> Oldest
+                const sortedLogs = [...data].sort((a,b) => 
+                    b.date.localeCompare(a.date)
+                );
+
+                sortedLogs.forEach((log, i) => {
                     const card = document.createElement('div');
                     card.className = 'card';
 
