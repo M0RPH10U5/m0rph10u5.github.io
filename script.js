@@ -276,9 +276,3 @@ function attachTooltip(el, service) {
         tooltip.classList.remove('visible');
     });
 }
-
-console.log('Status elements:',
-    document.getElementById('Platform'),
-    document.getElementById('Persistent-Universe'),
-    document.getElementById('Arena-Commander')
-);
