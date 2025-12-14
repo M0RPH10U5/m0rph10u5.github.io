@@ -205,7 +205,7 @@ body {
 .content {
     padding: 30px;
     padding-top: 86px; /* status bar height */
-    padding-bottom: 74px; /* footer height */
+    padding-bottom: 86px; /* footer height */
 
     overflow-y: auto;
     height: 100vh;
@@ -228,7 +228,7 @@ p {
     bottom: 0;
     left: 240px;
     width: calc(100% - 240px);
-    height: 44px;
+    height: 56px;
 
     background-color: #0f1724;
     border-top: 1px solid #1f2a3a;
