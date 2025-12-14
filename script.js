@@ -198,8 +198,8 @@ function updateStatusUI(data) {
         rsiServices.find(s => s.name === name);
 
     const platform = getService('Platform');
-    const pu = getService('Persistent Universe');
-    const ac = getService('Arena Commander');
+    const pu = getService('PU');
+    const ac = getService('AC');
 
     if (platform) {
         const el = document.getElementById('Platform');
@@ -219,6 +219,13 @@ function updateStatusUI(data) {
         attachTooltip(el, ac);
     }
 }
+
+function getService(name) {
+    const svc = rsiServices.find(s => s.name === name);
+    if (!svc) console.warn(`RSI service not found: ${name}`);
+    return svc;
+}
+
 
 // Create tooltip element once
 function createTooltip() {
