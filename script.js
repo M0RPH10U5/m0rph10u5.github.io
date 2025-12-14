@@ -171,41 +171,53 @@ async function renderRoute(route) {
                 break;
 
             case 'logs':
-                .sort((a,b) => new Date(b.date) - new Date(a.date)) // newwest first
-                .forEach(log => {
-                    content.innerHTML += `
-                        <div class="log-entry collapsed">
-                            <div class="log-line"></div>
-                            
-                            <div class="log-header">
-                                <h2>${log.title}</h2>
-                                <div class="log-meta">
-                                    <span class="log-date">${log.date}</span>
-                                    <span class="log-user">
-                                        <span class="label">USER</span>
-                                        <span class="value">${log.user}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="log-body">
-                                <p>${log.entry}</p>
-                            </div>
-                            
-                            <div class="log-toggle">READ LOG</div>
-                        </div>
-                    `;
-                });
+                content.innerHTML = `<h1>Captain Logs</h1>`;
 
-                // Expand / Collapse behavior
+                if (!Array.isArray(logs) || logs.length === 0) {
+                    content.innerHTML += `<p>No logs found.</p>`;
+                        break;
+                }
+
+                logs
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .forEach(log => {
+                        content.innerHTML += `
+                            <div class="log-entry collapsed">
+                                <div class="log-line"></div>
+
+                                <div class="log-header">
+                                    <h2>${log.title}</h2>
+                                    <div class="log-meta">
+                                        <span class="log-date">${log.date}</span>
+                                        <span class="log-user">
+                                            <span class="label">USER</span>
+                                            <span class="value">${log.user}</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="log-body">
+                                    <p>${log.entry}</p>
+                                </div>
+
+                                <div class="log-toggle">READ LOG</div>
+                            </div>
+                        `;
+                    });
+
                 content.querySelectorAll('.log-toggle').forEach(toggle => {
                     toggle.addEventListener('click', () => {
                         const entry = toggle.closest('.log-entry');
-                        entry.classList.toggle('collapsed');
+                        const collapsed = entry.classList.toggle('collapsed');
+
+                        toggle.textContent = collapsed
                             ? 'READ LOG'
                             : 'CLOSE LOG';
                     });
                 });
+
+                break;
+
 
             case 'about':
                 content.innerHTML = `
