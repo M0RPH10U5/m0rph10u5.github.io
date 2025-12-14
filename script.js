@@ -218,6 +218,9 @@ function updateStatusUI(data) {
         el.className = `mini ${mapStatusToClass(ac.status)}`;
         attachTooltip(el, ac);
     }
+
+    console.table(rsiServices.map(s => ({ name: s.name, status: s.status })));
+
 }
 
 function getService(name) {
@@ -263,5 +266,3 @@ function attachTooltip(el, service) {
         tooltip.classList.remove('visible');
     });
 }
-
-console.table(rsiServices.map(s => ({ name: s.name, status: s.status })));
