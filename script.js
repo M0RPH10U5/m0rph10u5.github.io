@@ -149,24 +149,22 @@ function mapSummaryStatus(status) {
 }
 
 function updateStatusUI(data) {
-    // Update summary status (status-right)
     const summaryData = mapSummaryStatus(data.summaryStatus || 'operational');
     const statusLeft = document.getElementById('summary-status');
 
     statusLeft.textContent = summaryData.text;
     statusLeft.className = `status-left ${summaryData.class}`;
 
-    // Cache services for tooltips
     rsiServices = data.services || [];
-    
+
+    if (!tooltip) createTooltip();
+
     const getService = (name) =>
         rsiServices.find(s => s.name === name);
 
     const platform = getService('Platform');
     const pu = getService('Persistent Universe');
     const ac = getService('Arena Commander');
-
-    if (!tooltip) createTooltip();
 
     if (platform) {
         const el = document.getElementById('Platform');
