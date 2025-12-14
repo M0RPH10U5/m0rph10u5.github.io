@@ -53,7 +53,7 @@ function renderMembers(members) {
         card.innerHTML = `
             <h2>${member.name}</h2>
             <strong><span class="sc-label">SC Name:</span><span class="sc-name">&nbsp;${member["sc-name"]}</span></strong>
-            <strong>Role:</strong><span class="role">${member.role}</span>
+            <span><strong>Role:&nbsp;</strong></span><span class="role">${member.role}</span>
             <strong>Specialty:</strong> ${member.specialty || 'N/A'}
             <br />
             <strong>Ship:</strong> ${member.ship || 'N/A'}
