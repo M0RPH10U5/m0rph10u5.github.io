@@ -172,21 +172,19 @@ async function renderRoute(route) {
 
             case 'logs':
                 content.innerHTML = `<h1>Captain Logs</h1>`;
-
-                if (Array.isArray(data) && data.length > 0) {
+                if (Array.isArray(data)) {
                     data.forEach(log => {
-                    content.innerHTML += `
-                        <div class="card">
-                            <h2>${log.title}</h2>
-                            <div class="log-date">${log.date}</div>
-                            <p>${log.entry}</p>
-                        </div>
-                    `;
+                        content.innerHTML += `
+                            <div class="card">
+                                <h2>${log.title}</h2>
+                                <div class="log-date">${log.date}</div>
+                                <p>${log.entry}</p>
+                            </div>
+                        `;
                     });
-                } else {
-                    content.innerHTML += `<p>No logs found.</p>`;
                 }
-                    break;
+                break;
+                
             case 'about':
                 content.innerHTML = `
                     <h1>About This Site</h1>
