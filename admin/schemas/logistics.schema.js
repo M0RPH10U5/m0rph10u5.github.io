@@ -24,7 +24,7 @@ export const LogisticsSchema = {
                         min: 0
                     },
                     inventory: {
-                        type: 'map'          // Special Editor Type
+                        type: 'map',          // Special Editor Type
                         keyFrom: 'users',    // Important
                         valueType: 'number',
                         min: 0,
