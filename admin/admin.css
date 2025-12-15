@@ -95,10 +95,12 @@ button:hover {
 }
 
 .delete-user {
-    margin-left: 6px;
+    position: absolute;
+    right: 6px;
+    top: 4px;
     cursor: pointer;
     color: #ff6b6b;
-    font-size: 0.7rem;
+    font-weight: bold;
 }
 
 .delete-user:hover,
@@ -116,4 +118,9 @@ button:hover {
 
 .rsi-table td.complete {
     color: #4dffb8; /* green */
+}
+
+.rsi-table th {
+    position: relative;
+    padding: 24px;
 }

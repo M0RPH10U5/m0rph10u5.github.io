@@ -45,6 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const schema = Schemas[file];
 
+      // Remove any existing schema editor
+      const oldTable = document.querySelector(".table-wrap");
+      if (oldTable) oldTable.remove();
+
       if (schema) {
         renderSchemaEditor(currentData, schema);
       } else {
@@ -177,14 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
     controlsDiv.appendChild(addUserBtn);
     table.parentElement.appendChild(controlsDiv);
 
-    // ==== Helper: Re-render header when new user added =====
-    function renderHeader() {
-      let headerHtml = '<tr><th>ITEM</th><th>NEEDED</th>';
-      users.forEach(u => headerHtml += `<th>${u}</th>`);
-      headerHtml += '<th>TOTAL</th></tr>';
-      thead.innerHTML = headerHtml;
-    }
-
     // ===== Input Listeners =====
     function attachInputListeners() {
       tbody.querySelectorAll('tr').forEach((tr, rowIndex) => {
@@ -192,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           td.oninput = () => {
             const item = data.items[rowIndex];
 
-            if (coIndexl === 0) {
+            if (colIndex === 0) {
               item.item = td.textContent;
             } else if (colIndex === 1) {
               item.needed = parseInt(td.textContent) || 0;
@@ -219,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Delete User
-      tabel.querySelectorAll('.delete-user').forEach(span => {
+      table.querySelectorAll('.delete-user').forEach(span => {
         span.onclick = () => {
           const user = span.dataset.user;
           if (!confirm(`Remove user "${user}" from all items?`)) return;
@@ -238,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const val = item.inventory[u] || 0;
       total += val;
       cell.textContent = val;
-      cell.className = val === 0 ? 'incomplete' : val < itemObj.needed ? 'partial' : 'complete';
+      cell.className = val === 0 ? 'incomplete' : val < item.needed ? 'partial' : 'complete';
     });
     tr.children[tr.children.length - 2].textContent = total;
   }
