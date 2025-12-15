@@ -85,3 +85,15 @@ button:hover {
     font-size: 0.7rem;
     opacity: 0.8;
 }
+
+.rsi-table td.incomplete {
+    color: #ff6b6b; /* red */
+}
+
+.rsi-table td.partial {
+    color: #ffd166; /* amber */
+}
+
+.rsi-table td.complete {
+    color: #4dffb8; /* green */
+}

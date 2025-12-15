@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF*8">
-        <title>Intergalactic Gamers United Admin Console</title>
-        <link rel="stylesheet" href="admin.css">
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div class="admin">
-            <aside class="admin-sidebar">
-                <h1>ADMIN</h1>
-                <ul id="file-list"></ul>
-            </aside>
+  <head>
+    <meta charset="UTF*8" />
+    <title>Intergalactic Gamers United Admin Console</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Rajdhani:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="admin">
+      <aside class="admin-sidebar">
+        <h1>ADMIN</h1>
+        <ul id="file-list"></ul>
+      </aside>
 
-            <main class="admin-main">
-                <header>
-                    <h2 id="editor-title">Select a JSON file</h2>
-                    <button id="export">EXPORT JSON</button>
-                </header>
+      <main class="admin-main">
+        <header>
+          <h2 id="editor-title">Select a JSON file</h2>
+          <button id="export">EXPORT JSON</button>
+        </header>
 
-                <pre id="editor" contenteditable="true"></pre>
+        <pre id="editor" contenteditable="true"></pre>
 
-                <div id="status"></div>
-            </main>
-        </div>
+        <div id="status"></div>
+      </main>
+    </div>
 
-        <script src="admin.js"></script>
-    </body>
+    <script type="module" src="admin.js"></script>
+  </body>
 </html>
