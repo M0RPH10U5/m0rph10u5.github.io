@@ -158,11 +158,24 @@ function renderLogisticsTable(content, data, title) {
         data.users.forEach(user => {
             const amount = item.inventory?.[user] || 0;
             total += amount;
-            tbody += `<td>${amount}</td>`;
+            
+            let statusClass = 'user-none';
+
+            if (amount >= item.needed) {
+                statusClass = 'user-complete';
+            } else if (amount > 0){
+                statusClass = 'user-partial';
+            }
+
+            tbody += `
+                <td class="user-value ${statusClass}">
+                    ${amount}
+                </td>
+            `;
         });
 
         tbody += `
-                <td class="${total >= item.needed ? 'complete' : 'incomplete'}">
+                <td class="total">
                     ${total}
                 </td>
             </tr>
