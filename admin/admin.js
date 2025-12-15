@@ -168,8 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const newItem = { item: 'New Item', needed: 0, inventory: {} };
       data.users.forEach(u => newItem.inventory[u] = 0);
       data.items.push(newItem);
-      renderRows();
-      attachInputListeners();
+      render();
     };
 
     const addUserBtn = document.createElement('button');
@@ -178,11 +177,16 @@ document.addEventListener("DOMContentLoaded", () => {
     addUserBtn.onclick = () => {
       const newUser = prompt('Enter new user name:');
       if (!newUser) return;
-      users.push(newUser);
-      data.items.forEach(item => item.inventory[newUser] = 0);
-      renderRows();
-      attachInputListeners();
-      renderHeader();
+
+      if (data.users.include(newUser)) {
+        alert ('User Already Exists');
+        return;
+      }
+
+      data.users.push(newUser);
+      data.items.forEach(item =>
+        item.inventory[newUser] = 0);
+      render();
     };
 
     controlsDiv.appendChild(addItemBtn);
