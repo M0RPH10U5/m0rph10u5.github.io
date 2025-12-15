@@ -119,7 +119,17 @@ document.addEventListener("DOMContentLoaded", () => {
         </th>`;
       });
       html += '<th>TOTAL</th><th></th></tr>';
-      thead.innerHTML = html; 
+      thead.innerHTML = html;
+      
+      // RE-Attach Delete Events
+      thead.querySelectorAll('.delete-user').forEach(span => {
+        span.onclick = () => {
+          const user = span.dataset.user;
+          if (confirm(`Remove user "${user}" from all items?`)) {
+            deleteUser(user);
+          }
+        };
+      });
     }
 
     //body
@@ -213,29 +223,17 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         };
       });
-
-      // Delete User
-      table.querySelectorAll('.delete-user').forEach(span => {
-        span.onclick = () => {
-          const user = span.dataset.user;
-          if (!confirm(`Remove user "${user}" from all items?`)) return;
-
-          data.users = data.users.filter(u => u !== user);
-          data.items.forEach(item => delete item.inventory[user]);
-          render();
-        };
-      });
     }
 
-  function updateRow(tr, item) {
-    let total = 0;
-    users.forEach((u, i) => {
-      const cell = tr.children[i + 2];
-      const val = item.inventory[u] || 0;
-      total += val;
-      cell.textContent = val;
-      cell.className = val === 0 ? 'incomplete' : val < item.needed ? 'partial' : 'complete';
-    });
+    function updateRow(tr, item) {
+      let total = 0;
+      users.forEach((u, i) => {
+        const cell = tr.children[i + 2];
+        const val = item.inventory[u] || 0;
+        total += val;
+        cell.textContent = val;
+        cell.className = val === 0 ? 'incomplete' : val < item.needed ? 'partial' : 'complete';
+      });
     tr.children[tr.children.length - 2].textContent = total;
   }
 
@@ -276,6 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
             : "complete";
       });
     });
+
+    function deleteUser(user) {
+      data.users = data.users.filter(u => !== user);
+      data.items.forEach(item => delete item.inventory[user]);
+      render();
+    }
+
   }
 
   function renderLogsTable(table, data) {
