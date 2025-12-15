@@ -12,7 +12,7 @@ export const LogisticsSchema = {
             required: 'true',
             items:{
                 type: 'object',
-                requpired: ['item', 'needed', 'inventory'],
+                required: ['item', 'needed', 'inventory'],
                 shape: {
                     item: {
                         type: 'string',
