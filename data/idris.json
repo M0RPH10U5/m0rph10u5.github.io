@@ -1,0 +1,23 @@
+{
+  "users": ["Jake", "Nova", "Orion"],
+  "items": [
+    {
+      "item": "Railgun Capacitors",
+      "needed": 6,
+      "inventory": {
+        "Jake": 2,
+        "Nova": 1,
+        "Orion": 0
+      }
+    },
+    {
+      "item": "Shield Generators",
+      "needed": 4,
+      "inventory": {
+        "Jake": 1,
+        "Nova": 2,
+        "Orion": 1
+      }
+    }
+  ]
+}
