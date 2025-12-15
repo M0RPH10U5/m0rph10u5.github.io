@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    background: #0b0f14;
+    color: #cfd8e3;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.admin {
+    display: flex;
+    height: 100vh;
+}
+
