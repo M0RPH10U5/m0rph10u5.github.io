@@ -136,3 +136,35 @@ function renderLogisticsTable(table, data) {
         });
     });
 }
+
+function renderLogsTable(table, data) {
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>DATE</th><th>USER</th><th>TITLE</th><th>ENTRY</th></tr>';
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    data.forEach(log => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td contenteditable="true">${log.date}</td>
+            <td contenteditable="true">${log.user}</td>
+            <td contenteditable="true">${log.title}</td>
+            <td contenteditable="true" style="font-family:Courier New;">${log.entry}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // update data when editing
+    tbody.querySelectorAll('tr').forEach((tr, idx) => {
+        tr.querySelectorAll('td').forEach((td, col) => {
+            td.addEventListener('input', () => {
+                const log = data[idx];
+                if(col===0) log.date = td.textContent;
+                else if(col===1) log.user = td.textContent;
+                else if(col===2) log.title = td.textContent;
+                else if(col===3) log.entry = td.textContent;
+            });
+        });
+    });
+}
