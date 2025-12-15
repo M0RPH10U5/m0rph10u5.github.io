@@ -237,6 +237,70 @@ async function renderRoute(route) {
                         </p>
                 `;
                     break;
+
+                case 'polaris':
+                    content.innerHTML = `<h1>Polaris Logistics</h1>`;
+
+                    if (!data || !Array.isArray(data.users) || !Array.isArray(data.items)) {
+                        content.innerHTML += `<p>Invalid Polaris data.</p>`;
+                        break;
+                    }
+
+                    const table = document.createElement('table');
+                    table.className = 'rsi-table';
+
+                    /* ===== TABLE HEADER ===== */
+                    let thead = `
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>NEEDED</th>
+                    `;
+
+                    data.users.forEach(user => {
+                        thead += `<th>${user.toUpperCase()}</th>`;
+                    });
+
+                    thead += `<th>TOTAL</th></tr></thead>`;
+                    table.innerHTML = thead;
+
+                    /* ===== TABLE BODY ===== */
+                    let tbody = `<tbody>`;
+
+                    data.items.forEach(item => {
+                        let total = 0;
+
+                        tbody += `
+                            <tr>
+                                <td>${item.item}</td>
+                                <td>${item.needed}</td>
+                        `;
+
+                        data.users.forEach(user => {
+                            const amount = item.inventory[user] || 0;
+                            total += amount;
+                            tbody += `<td>${amount}</td>`;
+                        });
+
+                        tbody += `
+                                <td class="${total >= item.needed ? 'complete' : 'incomplete'}">
+                                    ${total}
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    tbody += `</tbody>`;
+                    table.innerHTML += tbody;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'table-wrap';
+                    wrapper.appendChild(table);
+                    content.appendChild(wrapper);
+
+                    break;
+
+                case 'idris':
             
             default:
                 content.innerHTML = `<h1>Page Not Found</h1>`;
