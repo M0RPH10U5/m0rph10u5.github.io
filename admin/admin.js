@@ -1,3 +1,7 @@
+import { Schemas } from "./schemas/admin.schemas.js";
+import { LogisticsSchema } from './schemas/logistics.schema.js';
+import { LogsSchema } from './schemas/logs.schema.js';
+
 const files = [
     'overview.json',
     'fleet.json',
@@ -28,12 +32,22 @@ async function loadFile(file, el) {
     document.querySelectorAll('#file-list li').forEach(li => li.classList.remove('active'));
     el.classList.add('active');
 
+    currentFile = file;
+
     try {
-        const res = await fetch(`../data/${file}`);
+        const res = await fetch(`/data/${file}`);
         currentData = await res.json();
-        currentFile = file;
-        editor.textContent = JSON.stringify(currentData, null, 4);
         title.textContent = file;
+        
+        const schema = Schemas[file];
+
+        if (schema) {
+            renderSchemaEditor(currentData, schema);
+        } else {
+            editor.style.display = 'block';
+            editor.textContent = JSON.stringify(currentData, null, 4);
+        }
+        
         status.textContent = 'Loaded Successfully';
     } catch (err) {
         status.textContent = 'Failed to load JSON';
@@ -53,3 +67,72 @@ exportBtn.onclick = () => {
         status.textContent = 'Invalid JSON - Export Failed';
     }
 };
+
+function renderSchemaEditor(data, schema) {
+    editor.style.display = 'none'; // hide raw editor
+
+    const main = document.querySelector('.admin-main');
+    let tableWrap = document.querySelector('.table-wrap');
+    if (tableWrap) tableWrap.remove(); // remove old table
+
+    tableWrap = document.createElement('div');
+    tableWrap.className = 'table-wrap';
+
+    const table = document.createElement('table');
+    table.className = 'rsi-table';
+    tableWrap.appendChild(table);
+
+    main.appendChild(tableWrap);
+
+    if (schema.type === 'logistics') {
+        renderLogisticsTable(table, data);
+    } else if (schema.type === 'logs') {
+        renderLogsTable(table, data);
+    }
+}
+
+function renderLogisticsTable(table, data) {
+    // header
+    const users = data.users;
+    const thead = document.createElement('thead');
+    let headerHtml = '<tr><th>ITEM</th><th>NEEDED</th>';
+    users.forEach(u => headerHtml += `<th>${u}</th>`);
+    headerHtml += '<th>TOTAL</th></tr>';
+    thead.innerHTML = headerHtml;
+    table.appendChild(thead);
+
+    //body
+    const tbody = document.createElement('tbody');
+    data.items.forEach(item => {
+        let total = 0;
+        let rowHtml = `<tr><td>${item.item}</td><td>${item.needed}</td>`;
+        users.forEach(u => {
+            const amt = item.inventory[u] || 0;
+            total += amt;
+            const cls = amt === 0 ? 'incomplete' : amt < item.needed ? 'partial' : 'complete';
+            rowHtml += `<td class="${cls}" contenteditable="true" data-user="${u}">${amt}</td>`;
+        });
+        rowHtml += `<td>${total}</td></tr>`;
+        tbody.innerHTML = rowHtml;
+    });
+    table.appendChild(tbody);
+
+    // Listen for Edits
+    table.querySelectorAll('td[contenteditable]').forEach(td => {
+        td.addEventListener('input', e => {
+            const tr = td.closest('tr');
+            const itemName = tr.children[0].textContent;
+            const user = td.dataset.user;
+            const value = parseInt(td.textContent) || 0;
+
+            const item = data.items.find(i => i.item === itemName);
+            item.inventory[user] = value;
+
+            // Update total
+            const totalCell = tr.children[tr.children.length - 1];
+            totalCell.textContent = Object.value(item.inventory).reduce((a,b) => a+b, 0);
+
+            td.className = value === 0 ? 'incomplete' : value < item.needed ? 'partial' : 'complete';
+        });
+    });
+}

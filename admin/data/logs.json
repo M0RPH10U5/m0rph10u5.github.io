@@ -1,0 +1,26 @@
+[
+    {
+        "date": "2955-03-12",
+        "user": "1337-m0rph10u5",
+        "title": "Departure from Area18",
+        "entry": "Departed Area18 under clear conditions. Quantum drive calibration successful. Crew morale remains high."
+    },
+    {
+        "date": "2955-03-14",
+        "user": "1337-m0rph10u5",
+        "title": "Yela Encounter",
+        "entry": "Detected Vanduul scout signatures near Yela. Altered course and maintained radio silence. No engagement."
+    },
+    {
+        "date": "2955-03-18",
+        "user": "1337-m0rph10u5",
+        "title": "Everus Harbor Docking",
+        "entry": "Docked at Everus Harbor for hull repairs, fuel replenishment, and crew rotation."
+    },
+    {
+        "date": "2955-03-22",
+        "user": "1337-m0rph10u5",
+        "title": "Anomalous Scan",
+        "entry": "Long-range sensors picked up an unidentified anomaly in Stanton. Logged coordinates for future investigation."
+     }
+]
