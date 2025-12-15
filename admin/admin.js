@@ -106,13 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
     table.innerHTML = '';
     
     // header
-    const users = data.users;
-
     const thead = document.createElement("thead");
 
     function renderHeader() {
       let html = '<tr><th>ITEM</th><th>NEEDED</th>';
-      users.forEach((u, i) => {
+      data.users.forEach((u, i) => {
         html += `<th>
           ${u}
           <span class="delete-user" data-user="${u}">X</span>
@@ -143,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td contenteditable="true">${item.item}</td>
           <td contenteditable="true">${item.needed}</td>`;
 
-        users.forEach(u => {
+        data.users.forEach(u => {
           const val = item.inventory[u] || 0;
           total += val;
           const cls = val === 0 ? "incomplete" : val < item.needed ? "partial" : "complete";
@@ -168,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addItemBtn.textContent = 'Add Item';
     addItemBtn.onclick = () => {
       const newItem = { item: 'New Item', needed: 0, inventory: {} };
-      users.forEach(u => newItem.inventory[u] = 0);
+      data.users.forEach(u => newItem.inventory[u] = 0);
       data.items.push(newItem);
       renderRows();
       attachInputListeners();
@@ -227,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateRow(tr, item) {
       let total = 0;
-      users.forEach((u, i) => {
+      data.users.forEach((u, i) => {
         const cell = tr.children[i + 2];
         const val = item.inventory[u] || 0;
         total += val;
