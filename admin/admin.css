@@ -10,3 +10,78 @@ body {
     height: 100vh;
 }
 
+.admin-sidebar {
+    width: 220px;
+    background: linear-gradient(180deg, #111827, #0b0f14);
+    border-right: 1px solid #1f2a3a;
+    padding: 16px;)
+}
+
+.admin-sidebar h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+}
+
+.admin-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+}
+
+.admin-sidebar li:hover,
+.admin-sidebar li.active {
+    background: #1b2433;
+    color: #7fb4ff;
+}
+
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid #1f2a3a;
+}
+
+
+#editor {
+    flex: 1;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    overflow: auto;
+    outline: none;
+}
+
+
+button {
+    background: transparent;
+    border: 1px solid #7fb4ff;
+    color: #7fb4ff;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background: #1b2433;
+}
+
+
+#status {
+    padding: 8px 20px;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
