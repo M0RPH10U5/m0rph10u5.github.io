@@ -1,7 +1,8 @@
+import { Schemas } from "./schemas/admin.schemas.js";
+import { LogisticsSchema } from "./schemas/logistics.schema.js";
+import { LogsSchema } from "./schemas/logs.schema.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  import { Schemas } from "./schemas/admin.schemas.js";
-  import { LogisticsSchema } from "./schemas/logistics.schema.js";
-  import { LogsSchema } from "./schemas/logs.schema.js";
 
   const files = [
     "overview.json",
