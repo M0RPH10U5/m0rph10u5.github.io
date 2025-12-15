@@ -98,31 +98,116 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderLogisticsTable(table, data) {
+    // Remove old table contents
+    table.innerHTML = '';
+    
     // header
     const users = data.users;
     const thead = document.createElement("thead");
     let headerHtml = "<tr><th>ITEM</th><th>NEEDED</th>";
-    users.forEach((u) => (headerHtml += `<th>${u}</th>`));
+    users.forEach(u => headerHtml += `<th>${u}</th>`);
     headerHtml += "<th>TOTAL</th></tr>";
     thead.innerHTML = headerHtml;
     table.appendChild(thead);
 
     //body
     const tbody = document.createElement("tbody");
-    data.items.forEach((item) => {
-      let total = 0;
-      let rowHtml = `<tr><td>${item.item}</td><td>${item.needed}</td>`;
-      users.forEach((u) => {
-        const amt = item.inventory[u] || 0;
-        total += amt;
-        const cls =
-          amt === 0 ? "incomplete" : amt < item.needed ? "partial" : "complete";
-        rowHtml += `<td class="${cls}" contenteditable="true" data-user="${u}">${amt}</td>`;
+
+    function renderRows() {
+      tbody.innerHTML = '';
+      data.items.forEach(item => {
+        let total = 0;
+        let rowHtml = `<tr><td contenteditable="true">${item.item}</td><td contenteditable="true">${item.needed}</td>`;
+        users.forEach(u => {
+          const amt = item.inventory[u] || 0;
+          total += amt;
+          const cls = amt === 0 ? "incomplete" : amt < item.needed ? "partial" : "complete";
+          rowHtml += `<td class="${cls}" contenteditable="true" data-user="${u}">${amt}</td>`;
+        });
+        rowHtml += `<td>${total}</td></tr>`;
+        tbody.innerHTML += rowHtml;
       });
-      rowHtml += `<td>${total}</td></tr>`;
-      tbody.innerHTML += rowHtml;
-    });
+    }
+    
+    renderRows();
     table.appendChild(tbody);
+
+    // =========== Add Controls ==============
+    const controlsDiv = document.createElement('div');
+    controlsDiv.style.marginTop = '10px';
+
+    const addItemBtn = document.createElement('button');
+    addItemBtn.textContent = 'Add Item';
+    addItemBtn.onclick = () => {
+      const newItem = { item: 'New Item', needed: 0, inventory: {} };
+      users.forEach(u => newItem.inventory[u] = 0);
+      data.items.push(newItem);
+      renderRows();
+      attachInputListeners();
+    };
+
+    const addUserBtn = document.createElement('button');
+    addUserBtn.textContent = 'Add User';
+    addUserBtn.style.marginLeft = '10px';
+    addUserBtn.onclick = () => {
+      const newUser = prompt('Enter new user name:');
+      if (!newUser) return;
+      users.push(newUser);
+      data.items.forEach(item => item.inventory[newUser] = 0);
+      renderRows();
+      attachInputListeners();
+      renderHeader();
+    };
+
+    controlsDiv.appendChild(addItemBtn);
+    controlsDiv.appendChild(addUserBtn);
+    table.parentElement.appendChild(controlsDiv);
+
+    // ==== Helper: Re-render header when new user added =====
+    function renderHeader() {
+      let headerHtml = '<tr><th>ITEM</th><th>NEEDED</th>';
+      users.forEach(u => headerHtml += `<th>${u}</th>`);
+      headerHtml += '<th>TOTAL</th></tr>';
+      thead.innerHTML = headerHtml;
+    }
+
+    // ===== Input Listeners =====
+    function attachInputListeners() {
+      tbody.querySelectorAll('tr').forEach(tr => {
+        tr.querySelectorAll('td').forEach((td, col) => {
+          td.oninput = () => {
+            const itemName = tr.children[0].textContent;
+            const itemObj = data.items.find(i => i.item === itemName);
+            if (col === 0) {
+              itemObj.item = td.textContent;
+            } else if (col === 1) {
+              const val = parseInt(td.textContent) || 0;
+              itemObj.needed = val;
+              updateRow(td.closest('tr'), itemObj);
+            } else if (col > 1 && col <= users.length) {
+              const user = users[col - 2];
+              const val = parseInt(td.textContent) || 0;
+              itemObj.inventory[user] = val;
+              update(td.closest('tr'), itemObj);
+            }
+          };
+        });
+      });
+    }
+
+  function updateRow(tr, itemObj) {
+    let total = 0;
+    users.forEach((u, idx) => {
+      const cell = tr.children[idx + 2];
+      const val = itemObj.inventory[u] || 0;
+      total += val;
+      cell.textContent = val;
+      cell.className = val === 0 ? 'incomplete' : val < itemObj.needed ? 'partial' : 'complete';
+    });
+    tr.children[tr.children.length - 1].textContent = total;
+  }
+
+  attachInputListeners();
 
     // Listen for Edits
     table.querySelectorAll("td[contenteditable]").forEach((td) => {
