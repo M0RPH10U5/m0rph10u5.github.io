@@ -624,3 +624,29 @@ p {
     color: #ffffff;
     text-shadow: 0 0 6px rgba(127,180,255,0.4);
 }
+
+/* Table */
+.rsi-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Rajdhani', sans-serif;
+    color: #cde6ff;
+}
+
+.rsi-table th {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #7fb4ff;
+}
+
+.rsi-table td {
+    text-align: center;
+}
+
+.rsi-table td.complete {
+    color: #4dffb8;
+}
+
+.rsi-table td.incomplete {
+    color: #ff6b6b;
+}
