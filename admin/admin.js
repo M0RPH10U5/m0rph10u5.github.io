@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // Delete item
-      table.querySelectorAll('.delete-item')forEach(btn => {
+      table.querySelectorAll('.delete-item').forEach(btn => {
         btn.onclick = () => {
           const idx = parseInt(btn.dataset.index);
           if (confirm('Delete this item?')) {
