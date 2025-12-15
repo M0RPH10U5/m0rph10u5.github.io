@@ -103,34 +103,48 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // header
     const users = data.users;
+
     const thead = document.createElement("thead");
-    let headerHtml = "<tr><th>ITEM</th><th>NEEDED</th>";
-    users.forEach(u => headerHtml += `<th>${u}</th>`);
-    headerHtml += "<th>TOTAL</th></tr>";
-    thead.innerHTML = headerHtml;
-    table.appendChild(thead);
+
+    function renderHeader() {
+      let html = '<tr><th>ITEM</th><th>NEEDED</th>';
+      users.forEach((u, i) => {
+        html += `<th>
+          ${u}
+          <span class="delete-user" data-user="${u}">X</span>
+        </th>`;
+      });
+      html += '<th>TOTAL</th><th></th></tr>';
+      thead.innerHTML = html; 
+    }
 
     //body
     const tbody = document.createElement("tbody");
 
     function renderRows() {
       tbody.innerHTML = '';
-      data.items.forEach(item => {
+      data.items.forEach((item, index) => {
         let total = 0;
-        let rowHtml = `<tr><td contenteditable="true">${item.item}</td><td contenteditable="true">${item.needed}</td>`;
+        let row = `<tr>
+          <td contenteditable="true">${item.item}</td>
+          <td contenteditable="true">${item.needed}</td>`;
+
         users.forEach(u => {
-          const amt = item.inventory[u] || 0;
-          total += amt;
-          const cls = amt === 0 ? "incomplete" : amt < item.needed ? "partial" : "complete";
-          rowHtml += `<td class="${cls}" contenteditable="true" data-user="${u}">${amt}</td>`;
+          const val = item.inventory[u] || 0;
+          total += val;
+          const cls = val === 0 ? "incomplete" : val < item.needed ? "partial" : "complete";
+          row += `<td contenteditable="true" data-user="${u}" class="${cls}">${val}</td>`;
         });
-        rowHtml += `<td>${total}</td></tr>`;
-        tbody.innerHTML += rowHtml;
+
+        row += `<td>${total}</td>
+                <td><button class="delete-item" data-index="${index}">🗑️</button></td>
+            </tr>`;
+
+        tbody.innerHTML += row;
       });
     }
     
     renderRows();
-    table.appendChild(tbody);
 
     // =========== Add Controls ==============
     const controlsDiv = document.createElement('div');
@@ -173,41 +187,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Input Listeners =====
     function attachInputListeners() {
-      tbody.querySelectorAll('tr').forEach(tr => {
-        tr.querySelectorAll('td').forEach((td, col) => {
+      tbody.querySelectorAll('tr').forEach((tr, rowIndex) => {
+        tr.querySelectorAll('td').forEach((td, colIndex) => {
           td.oninput = () => {
-            const itemName = tr.children[0].textContent;
-            const itemObj = data.items.find(i => i.item === itemName);
-            if (col === 0) {
-              itemObj.item = td.textContent;
-            } else if (col === 1) {
-              const val = parseInt(td.textContent) || 0;
-              itemObj.needed = val;
-              updateRow(td.closest('tr'), itemObj);
-            } else if (col > 1 && col <= users.length) {
-              const user = users[col - 2];
-              const val = parseInt(td.textContent) || 0;
-              itemObj.inventory[user] = val;
-              update(td.closest('tr'), itemObj);
+            const item = data.items[rowIndex];
+
+            if (coIndexl === 0) {
+              item.item = td.textContent;
+            } else if (colIndex === 1) {
+              item.needed = parseInt(td.textContent) || 0;
+            } else if (colIndex > 1 && colIndex <= users.length +1) {
+              const user = users[colIndex - 2];
+              item.inventory[user] = parseInt(td.textContent) || 0;
             }
+
+            updateRow(tr, item);
+
           };
         });
       });
+
+      // Delete item
+      table.querySelectorAll('.delete-item')forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.dataset.index);
+          if (confirm('Delete this item?')) {
+            data.items.splice(idx, 1);
+            render();
+          }
+        };
+      });
+
+      // Delete User
+      tabel.querySelectorAll('.delete-user').forEach(span => {
+        span.onclick = () => {
+          const user = span.dataset.user;
+          if (!confirm(`Remove user "${user}" from all items?`)) return;
+
+          data.users = data.users.filter(u => u !== user);
+          data.items.forEach(item => delete item.inventory[user]);
+          render();
+        };
+      });
     }
 
-  function updateRow(tr, itemObj) {
+  function updateRow(tr, item) {
     let total = 0;
-    users.forEach((u, idx) => {
-      const cell = tr.children[idx + 2];
-      const val = itemObj.inventory[u] || 0;
+    users.forEach((u, i) => {
+      const cell = tr.children[i + 2];
+      const val = item.inventory[u] || 0;
       total += val;
       cell.textContent = val;
       cell.className = val === 0 ? 'incomplete' : val < itemObj.needed ? 'partial' : 'complete';
     });
-    tr.children[tr.children.length - 1].textContent = total;
+    tr.children[tr.children.length - 2].textContent = total;
   }
 
-  attachInputListeners();
+  function render() {
+    renderHeader();
+    renderRows();
+    attachInputListeners();
+  }
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  render();
+
 
     // Listen for Edits
     table.querySelectorAll("td[contenteditable]").forEach((td) => {

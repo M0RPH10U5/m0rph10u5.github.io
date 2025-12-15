@@ -86,6 +86,26 @@ button:hover {
     opacity: 0.8;
 }
 
+.delete-item {
+    background: transparent;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.delete-user {
+    margin-left: 6px;
+    cursor: pointer;
+    color: #ff6b6b;
+    font-size: 0.7rem;
+}
+
+.delete-user:hover,
+.delete-item:hover {
+    color: #ff9f9f;
+}
+
 .rsi-table td.incomplete {
     color: #ff6b6b; /* red */
 }
