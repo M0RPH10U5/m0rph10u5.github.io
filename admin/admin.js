@@ -232,7 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const val = item.inventory[u] || 0;
         total += val;
         cell.textContent = val;
-        cell.className = val === 0 ? 'incomplete' : val < item.needed ? 'partial' : 'complete';
+        cell.className =
+          val === 0 ? 'incomplete' : val < item.needed ? 'partial' : 'complete';
       });
     tr.children[tr.children.length - 2].textContent = total;
   }
@@ -247,36 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
   table.appendChild(tbody);
   render();
 
-
-    // Listen for Edits
-    table.querySelectorAll("td[contenteditable]").forEach((td) => {
-      td.addEventListener("input", (e) => {
-        const tr = td.closest("tr");
-        const itemName = tr.children[0].textContent;
-        const user = td.dataset.user;
-        const value = parseInt(td.textContent) || 0;
-
-        const item = data.items.find((i) => i.item === itemName);
-        item.inventory[user] = value;
-
-        // Update total
-        const totalCell = tr.children[tr.children.length - 1];
-        totalCell.textContent = Object.values(item.inventory).reduce(
-          (a, b) => a + b,
-          0
-        );
-
-        td.className =
-          value === 0
-            ? "incomplete"
-            : value < item.needed
-            ? "partial"
-            : "complete";
-      });
-    });
-
     function deleteUser(user) {
-      data.users = data.users.filter(u => !== user);
+      data.users = data.users.filter(u => u !== user);
       data.items.forEach(item => delete item.inventory[user]);
       render();
     }
