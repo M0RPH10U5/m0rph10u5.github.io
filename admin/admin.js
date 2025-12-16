@@ -2,6 +2,8 @@ import { Schemas } from "./schemas/admin.schemas.js";
 import { LogisticsSchema } from "./schemas/logistics.schema.js";
 import { LogsSchema } from "./schemas/logs.schema.js";
 
+let schemaActive = false;
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const files = [
@@ -46,7 +48,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Remove old editor/table
       const oldTable = document.querySelector(".table-wrap");
       if (oldTable) oldTable.remove();
-      editor.style.display = "none";
+      
+      if (schema) {
+        schemaActive = true;
+        renderSchemaEditor(currentData, schema);
+      } else {
+        schemaActive = false;
+        editor.style.display = "block";
+        editor.textContent = JSON.stringify(currentData, null, 4);
+      }
 
       if (schema?.type === "logistics") {
         // Create a table element and pass it
@@ -74,20 +84,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   exportBtn.onclick = () => {
-    if (!currentData || !currentFile) {
-      status.textContent = "Nothing to export";
-      return;
-    }
+    try{
+      let output;
 
-    try {
-      const blob =new Blob(
-        [JSON.stringify(currentData, null, 4)],
-        { type: "application/json"}
+      if (schemaActive) {
+        // Schema editor is authoritative
+        output = currentData;
+      } else {
+        // Raw Editor Fallback
+        output = JSON.parse(editor.textContent);
+      }
+
+      if (!schemaActive && !editor.textContent.trim()) {
+        status.textContent = "Editor is empty";
+        return;
+      }
+
+      const blob = new Blob(
+        [JSON.stringify(output, null, 4)],
+        { type: "application/json" }
       );
 
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = currentFile;
+      a.download = currentFile || "data.json";
       document.body.appendChild(a);
       a.click();
       a.remove();
