@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Create a table element and pass it
         const table = document.createElement("table");
         table.className = "rsi-table";
-        renderLogisticsTable(currentData, schema);
+        renderLogisticsTable(table, currentData);
       } else if (schema?.type === "logs") {
         renderLogsTable(currentData);
       } else if (currentFile === "overview.json") {
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ----------------- Logistics Editor (Polaris / Idris) ----------------- */
-  function renderLogisticsTable(table, currentData) {
+  function renderLogisticsTable(table, data) {
     editor.style.display = "none";
     const main = document.querySelector(".admin-main");
     let tableWrap = document.querySelector(".table-wrap");
