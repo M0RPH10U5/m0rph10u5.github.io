@@ -48,15 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // Remove old editor/table
       const oldTable = document.querySelector(".table-wrap");
       if (oldTable) oldTable.remove();
-      
-      if (schema) {
-        schemaActive = true;
-        renderSchemaEditor(currentData, schema);
-      } else {
-        schemaActive = false;
-        editor.style.display = "block";
-        editor.textContent = JSON.stringify(currentData, null, 4);
-      }
+
+      schemaActive = !!schema;
 
       if (schema?.type === "logistics") {
         // Create a table element and pass it
