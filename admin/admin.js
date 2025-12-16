@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const newUser = prompt('Enter new user name:');
       if (!newUser) return;
 
-      if (data.users.include(newUser)) {
+      if (data.users.includes(newUser)) {
         alert ('User Already Exists');
         return;
       }
@@ -204,8 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
               item.item = td.textContent;
             } else if (colIndex === 1) {
               item.needed = parseInt(td.textContent) || 0;
-            } else if (colIndex > 1 && colIndex <= users.length +1) {
-              const user = users[colIndex - 2];
+            } else if (colIndex > 1 && colIndex <= data.users.length + 1) {
+              const user = data.users[colIndex - 2];
               item.inventory[user] = parseInt(td.textContent) || 0;
             }
 
