@@ -49,6 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
       editor.style.display = "none";
 
       if (schema?.type === "logistics") {
+        // Create a table element and pass it
+        const table = document.createElement("table");
+        table.className = "rsi-table";
         renderLogisticsTable(currentData, schema);
       } else if (schema?.type === "logs") {
         renderLogsTable(currentData);
