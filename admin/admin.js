@@ -210,6 +210,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderCards();
   }
+  /* ----------------- SC Date Gen ----------------- */
+  function getStarCitizenDate() {
+    const now = new Date();
+    const scYear = now.getUTCFullYear() + 930;
+
+    const month = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(now.getUTCDate()).padStart(2, "0");
+
+    return `${scYear}-${month}-${day}`;
+  }
 
   /* ----------------- Logs Editor ----------------- */
   function renderLogsTable(data) {
@@ -277,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addBtn.textContent = "Add Log Entry";
     addBtn.onclick = () => {
       data.unshift({
-        date: new Date().toISOString().split("T")[0],
+        date: getStarCitizenDate(),
         user: "",
         title: "",
         entry: ""
