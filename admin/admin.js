@@ -74,16 +74,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   exportBtn.onclick = () => {
+    if (!currentData || !currentFile) {
+      status.textContent = "Nothing to export";
+      return;
+    }
+
     try {
-      const parsed = JSON.parse(editor.textContent);
-      const blob = new Blob([JSON.stringify(parsed, null, 4)], { type: "application/json" });
+      const blob =new Blob(
+        [JSON.stringify(currentData, null, 4)],
+        { type: "application/json"}
+      );
+
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = currentFile || "data.json";
+      a.download = currentFile;
+      document.body.appendChild(a);
       a.click();
+      a.remove();
+
       status.textContent = "Exported JSON";
     } catch (err) {
-      status.textContent = "Invalid JSON - Export Failed";
+      console.error(err);
+      status.textContent = "Export Failed";
     }
   };
 
@@ -155,13 +167,21 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style = "border:1px solid #ccc;padding:10px;margin:5px;border-radius:5px;display:inline-block;vertical-align:top;min-width:200px;";
 
         fields.forEach(f => {
-          const label = document.createElement("div");
+          const fieldWrap = document.createElement("div");
+
+          const label = document.createElement("label");
           label.textContent = f.toUpperCase();
+          label.style.display = "block";
+          label.style.fontSize = "0.65rem";
+          label.style.opacity = "0.7";
+
           const input = document.createElement("input");
           input.value = item[f] || "";
           input.oninput = () => item[f] = input.value;
-          label.appendChild(input);
-          card.appendChild(label);
+
+          fieldWrap.appendChild(label);
+          fieldWrap.appendChild(input);
+          card.appendChild(fieldWrap);
         });
 
         const deleteBtn = document.createElement("button");
