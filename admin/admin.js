@@ -77,40 +77,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   exportBtn.onclick = () => {
-    try{
-      let output;
-
-      if (schemaActive) {
-        // Schema editor is authoritative
-        output = currentData;
-      } else {
-        // Raw Editor Fallback
-        output = JSON.parse(editor.textContent);
-      }
-
-      if (!schemaActive && !editor.textContent.trim()) {
-        status.textContent = "Editor is empty";
-        return;
-      }
-
-      const blob = new Blob(
-        [JSON.stringify(output, null, 4)],
-        { type: "application/json" }
-      );
-
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = currentFile || "data.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      status.textContent = "Exported JSON";
-    } catch (err) {
-      console.error(err);
-      status.textContent = "Export Failed";
+  try {
+    if (!currentFile) {
+      status.textContent = "Nothing to export";
+      return;
     }
-  };
+
+    // 🔥 FORCE SYNC BEFORE EXPORT
+    syncEditorToData();
+
+    let output;
+
+    if (schemaActive) {
+      output = currentData;
+    } else {
+      output = JSON.parse(editor.textContent);
+    }
+
+    const blob = new Blob(
+      [JSON.stringify(output, null, 4)],
+      { type: "application/json" }
+    );
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = currentFile;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    status.textContent = "Exported JSON";
+  } catch (err) {
+    console.error(err);
+    status.textContent = "Export Failed";
+  }
+};
 
   /* ----------------- Overview Editor ----------------- */
   function renderOverviewEditor(data) {
@@ -437,5 +438,39 @@ document.addEventListener("DOMContentLoaded", () => {
     tableWrap.appendChild(controlsDiv);
 
     render();
+  }
+
+  function syncEditorToData() {
+    if (!schemaActive || !currentData) return;
+
+    // Overview
+    if (currentFile === "overview.json") {
+      const rows = editor.querySelectorAll("tbody tr");
+      currentData.length = 0;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        currentData.push({
+          title: cells[0].textContent.trim(),
+          content: cells[1].textContent.trim()
+        });
+      });
+    }
+
+    // Logs
+    if (currentFile === "logs.json") {
+      const rows = editor.querySelectorAll("tbody tr");
+      currentData.length = 0;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        currentData.push({
+          date: cells[0].textContent.trim(),
+          user: cells[1].textContent.trim(),
+          title: cells[2].textContent.trim(),
+          entry: cells[3].textContent.trim()
+        });
+      });
+    }
   }
 });
