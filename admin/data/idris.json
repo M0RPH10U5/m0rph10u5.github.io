@@ -1,11 +1,13 @@
 {
-  "users": [],
+  "users": ["1337-m0rph10u5", "drakestorm", "fun_and_games"],
     "items": [
         {
-            "item": "",
-            "needed": 0,
+            "item": "Wikelo Favor",
+            "needed": 50,
             "inventory": {
-                
+                "1337-m0rph10u5": 0,
+                "drakestorm": 0,
+                "fun_and_games": 0
             }
         }
     ]
