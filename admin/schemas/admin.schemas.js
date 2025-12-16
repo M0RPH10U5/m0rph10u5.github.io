@@ -5,10 +5,10 @@ import { MembersSchema } from './members.schema.js';
 import { OverviewSchema } from './overview.schema.js';
 
 export const Schemas = {
-    'overview.json': OverviewSchema,
-    'fleet.json': FleetSchema,
-    'members.json': MembersSchema,
-    'logs.json': LogsSchema
-    'polaris.json': LogisticsSchema,
-    'idris.json': LogisticsSchema
+    'overview.json': { type: "overview" },
+    'fleet.json': { type: "cards" },
+    'members.json': { type: "cards" },
+    'logs.json': { type: "logs" },
+    'polaris.json': { type: "logistics" },
+    'idris.json': { type: "logistics" }
 };

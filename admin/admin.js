@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ----------------- Logistics Editor (Polaris / Idris) ----------------- */
-  function renderLogisticsTable(table, data) {
+  function renderLogisticsTable(table, currentData) {
     editor.style.display = "none";
     const main = document.querySelector(".admin-main");
     let tableWrap = document.querySelector(".table-wrap");
