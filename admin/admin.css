@@ -1,3 +1,10 @@
+/* ------------------- Global ------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* -------------------- Base -------------------- */
 body {
     margin: 0;
@@ -140,6 +147,7 @@ button:hover {
 
 /* -------------------- Card Editor -------------------- */
 #editor .card {
+    max-width: 260px;
     border: 1px solid #1f2a3a;
     border-radius: 8px;
     padding: 12px;
@@ -158,6 +166,7 @@ button:hover {
 
 #editor .card input {
     width: 100%;
+    max-width: 100%;
     padding: 4px 6px;
     border: 1px solid #7fb4ff;
     border-radius: 4px;
@@ -165,6 +174,7 @@ button:hover {
     color: #cfd8e3;
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.75rem;
+    box-sizing: border-box;
 }
 
 #editor .card button {

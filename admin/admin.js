@@ -200,34 +200,72 @@ document.addEventListener("DOMContentLoaded", () => {
     table.className = "rsi-table";
 
     const thead = document.createElement("thead");
-    thead.innerHTML = "<tr><th>DATE</th><th>USER</th><th>TITLE</th><th>ENTRY</th></tr>";
+    thead.innerHTML = `
+      <tr>
+        <th>DATE</th>
+        <th>USER</th>
+        <th>TITLE</th>
+        <th>ENTRY</th>
+      </tr>
+    `;
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
-    data.forEach((log) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td contenteditable="true">${log.date}</td>
-        <td contenteditable="true">${log.user}</td>
-        <td contenteditable="true">${log.title}</td>
-        <td contenteditable="true" style="font-family:Courier New;">${log.entry}</td>
-      `;
-      tbody.appendChild(tr);
-    });
     table.appendChild(tbody);
+
+    function renderRows() {
+      tbody.innerHTML = '';
+
+      data.forEach((log, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td contenteditable="true">${log.date || ""}</td>
+          <td contenteditable="true">${log.user || ""}</td>
+          <td contenteditable="true">${log.title || ""}</td>
+          <td contenteditable="true" style="font-family: Courier New;">${log.entry || ""}</td>
+          <td><button class="delete-item" data-index="${idx}">🗑️</button></td>
+          `;
+          tbody.appendChild(tr);
+      });
+
+      // Bind Edits
+      tbody.querySelectorAll("tr").forEach((tr, idx) => {
+        const tds = tr.querySelectorAll("td");
+        tds[0].oninput = () => data[idx].date = tds[0].textContent;
+        tds[1].oninput = () => data[idx].user = tds[1].textContent;
+        tds[2].oninput = () => data[idx].title = tds[2].textContent;
+        tds[3].oninput = () => data[idx].entry = tds[3].textContent;
+      });
+
+      // Delete Log
+      tbody.querySelectorAll(".delete-item").forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.dataset.index);
+          if (confirm("Delete this log entry?")) {
+            data.splice(idx, 1);
+            renderRows();
+          }
+        };
+      });
+    }
+
+    renderRows();
     editor.appendChild(table);
 
-    tbody.querySelectorAll("tr").forEach((tr, idx) => {
-      tr.querySelectorAll("td").forEach((td, col) => {
-        td.addEventListener("input", () => {
-          const log = data[idx];
-          if (col === 0) log.date = td.textContent;
-          else if (col === 1) log.user = td.textContent;
-          else if (col === 2) log.title = td.textContent;
-          else if (col === 3) log.entry = td.textContent;
-        });
+    // Add Log
+    const addBtn = document.createElement("button");
+    addBtn.textContent = "Add Log Entry";
+    addBtn.onclick = () => {
+      data.unshift({
+        date: new Date().toISOString().split("T")[0],
+        user: "",
+        title: "",
+        entry: ""
       });
-    });
+      renderRows();
+    };
+
+    editor.appendChild(addBtn);
   }
 
   /* ----------------- Logistics Editor (Polaris / Idris) ----------------- */
