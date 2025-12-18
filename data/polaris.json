@@ -1,5 +1,9 @@
 {
-    "users": ["1337-m0rph10u5", "drakestorm", "fun_and_games"],
+    "users": [
+        "1337-m0rph10u5",
+        "drakestorm",
+        "fun_and_games"
+    ],
     "items": [
         {
             "item": "Wikelo Favor",
@@ -23,7 +27,7 @@
             "item": "DCHS-05 Orbital Positioning Comp-Board",
             "needed": 20,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 7,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -32,21 +36,21 @@
             "item": "Caranite",
             "needed": 20,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 20,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Irradiated Valakkar Fang (Apex)",
             "needed": 20,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 20,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "MG Scrip",
             "needed": 20,
             "inventory": {
@@ -55,7 +59,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Ace Interceptor Helmet",
             "needed": 15,
             "inventory": {
@@ -64,7 +68,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Irradiated Valakkar Pearl (Grade AAA)",
             "needed": 20,
             "inventory": {
@@ -73,7 +77,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "UEE 6th Platoon Medal (pristine)",
             "needed": 20,
             "inventory": {
@@ -82,7 +86,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Caranite (Pure)",
             "needed": 20,
             "inventory": {
@@ -91,7 +95,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Finley the Stormwal Large Plushie",
             "needed": 10,
             "inventory": {
@@ -100,7 +104,7 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Picoball",
             "needed": 1,
             "inventory": {
@@ -109,25 +113,25 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Janalite",
             "needed": 5,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 5,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "WowBlast Desperado Toy Pistol Red",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 3,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "8 SCU of Atlasium",
             "needed": 6,
             "inventory": {
@@ -136,29 +140,29 @@
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "Scourge Railgun",
             "needed": 10,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 4,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "ASD Secure Drive",
             "needed": 20,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 30,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
         },
-         {
+        {
             "item": "RCMBNT-PWL-1",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -167,7 +171,7 @@
             "item": "RCMBNT-PWL-2",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -176,7 +180,7 @@
             "item": "RCMBNT-PWL-3",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -185,7 +189,7 @@
             "item": "RCMBNT-RGL-1",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -212,15 +216,16 @@
             "item": "RCMBNT-XTL-1",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
-        },{
+        },
+        {
             "item": "RCMBNT-XTL-2",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
@@ -229,7 +234,7 @@
             "item": "RCMBNT-XTL-3",
             "needed": 1,
             "inventory": {
-                "1337-m0rph10u5": 0,
+                "1337-m0rph10u5": 1,
                 "drakestorm": 0,
                 "fun_and_games": 0
             }
