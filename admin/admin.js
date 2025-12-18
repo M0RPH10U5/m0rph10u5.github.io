@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentFile = file;
 
     try {
-      const res = await fetch(`data/${file}`);
+      const res = await fetch(`../data/${file}`);
       currentData = await res.json();
       title.textContent = file;
 
@@ -474,3 +474,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
